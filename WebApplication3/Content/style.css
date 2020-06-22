@@ -121,6 +121,8 @@ img {
 	height: 90px;
 	margin: 0 auto;
 	background: #19446a url(images/templatemo_header_bg.jpg) repeat-x;
+    top: 0;
+    position:fixed;
 }
 
 #templatemo_header {

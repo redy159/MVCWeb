@@ -1,22 +1,16 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import Test from './test.jsx';
+import Test from './Component/test.jsx';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [{
-                Id : 1,
-                Name: "PS4",
-                Price : 2000
+            data: {
+                Name: "Testing",
+                Price: 1,
+                Manufactor:"Random"
             },
-                {
-                    Id: 3,
-                    Name: "PS2",
-                    Price: 1000
-                },
-            ],
             test: {
                 Id: 9,
                 Name: "test",
@@ -26,16 +20,16 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/api/Manager/SendAndGetItem', {
+        fetch('/api/Manager/AddProduct', {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(this.state.test)
+            body: JSON.stringify(this.state.data)
         })
             .then(response => response.json())
-            .then(data => this.setState({ data: data }));
+            .then(data => { });
     }
 
     render() {

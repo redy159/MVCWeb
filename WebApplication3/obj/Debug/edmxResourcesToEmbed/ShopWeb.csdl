@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ShoppingWebEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ImageFiles" EntityType="ShoppingWebModel.ImageFile" />
+    <EntitySet Name="Products" EntityType="ShoppingWebModel.Product" />
+    <AssociationSet Name="FK_Product_ImageFile" Association="ShoppingWebModel.FK_Product_ImageFile">
+      <End Role="ImageFile" EntitySet="ImageFiles" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ImageFile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="ImageFile" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Manufactor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="Int32" />
+    <Property Name="RegionId" Type="Int32" />
+    <NavigationProperty Name="ImageFile" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="Product" ToRole="ImageFile" />
+  </EntityType>
+  <Association Name="FK_Product_ImageFile">
+    <End Type="ShoppingWebModel.ImageFile" Role="ImageFile" Multiplicity="0..1" />
+    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImageFile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Image" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using WebApplication3.Models;
 
@@ -10,15 +12,44 @@ namespace WebApplication3.Controllers.API_Controller
 {
     public class ManagerController : ApiController
     {
-        [HttpGet]
-        public ShopItem GetShopItem()
+        ShoppingWebEntities _db;
+        public ManagerController()
         {
-            return new ShopItem
+            _db = new ShoppingWebEntities();
+        }
+
+        [HttpGet]
+        public async Task<List<Product>> GetAll()
+        {
+            List<Product> data = new List<Product>();
+            data = await (from p in _db.Products
+                    select p).ToListAsync();
+            return data;
+        }
+
+        [HttpGet]
+        public async Task<Product> GetProductById(int id)
+        {
+            Product data = await (from p in _db.Products
+                                  where p.Id == id
+                                  select p).FirstOrDefaultAsync();
+            return data;
+        }
+
+        [HttpPost]
+        public void AddProduct(Product data)
+        {
+            Product tmp = data;
+            try
             {
-                Id = 1,
-                Name = "PS5",
-                Price = 15000
-            };
+                _db.Products.Add(tmp);
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return;
         }
 
         [HttpPost]

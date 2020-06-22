@@ -79,8 +79,11 @@ C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\System.Web.Http
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Master\source\repos\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csprojAssemblyReference.cache
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csproj.CoreCompileInputs.cache
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csproj.CopyComplete
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\obj\Debug\WebApplication3.dll
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\obj\Debug\WebApplication3.pdb
+C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.dll
+C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.SqlServer.dll
+C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.xml
+C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.SqlServer.xml

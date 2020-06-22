@@ -2,17 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Simple Gray, Professional free website template</title>
-    <meta name="keywords" content="free templates, website templates, CSS, XHTML" />
-    <meta name="description" content="Simple Gray - Professional free XHTML/CSS template provided by templatemo.com" />
+    <title>@ViewBag.Title - MVC Shopping</title>
     <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
     <script language="javascript" type="text/javascript">
-function clearText(field)
-{
-    if (field.defaultValue == field.value) field.value = '';
-    else if (field.value == '') field.value = field.defaultValue;
-}
     </script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 
@@ -22,7 +17,7 @@ function clearText(field)
             <div id="templatemo_menu">
                 <div id="templatemo_menu_left"></div>
                 <ul>
-                    <li><a href="#" class="current">Home</a></li>
+                    <li>@Html.ActionLink("Home","Index","Home")</li>
                     @*<li><a href="http://www.templatemo.com">Services</a></li>
                     <li><a href="http://www.templatemo.com/page/2">Gallery</a></li>
                     <li><a href="#">Company</a></li>
@@ -33,7 +28,7 @@ function clearText(field)
     </div>
     <!-- End of Top Menu-->
     <!-- Banner Start -->
-    <div id="templatemo_banner_wrapper">
+    @*<div id="templatemo_banner_wrapper">
         <div id="templatemo_banner">
 
             <div id="templatemo_banner_image">
@@ -44,7 +39,7 @@ function clearText(field)
 
             <div class="cleaner"></div>
         </div>
-    </div>
+    </div>*@
     <!-- End of Banner -->
 
 
