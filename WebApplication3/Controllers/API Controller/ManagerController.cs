@@ -20,5 +20,17 @@ namespace WebApplication3.Controllers.API_Controller
                 Price = 15000
             };
         }
+
+        [HttpPost]
+        public ShopItem SendAndGetItem([FromBody]ShopItem item)
+        {
+            ShopItem demo = item;
+            return new ShopItem
+            {
+                Id = 2,
+                Name = "XBox X",
+                Price = 10000,
+            };
+        }
     }
 }
