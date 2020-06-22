@@ -6,10 +6,21 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
+            data: [{
                 Id : 1,
                 Name: "PS4",
                 Price : 2000
+            },
+                {
+                    Id: 3,
+                    Name: "PS2",
+                    Price: 1000
+                },
+            ],
+            test: {
+                Id: 9,
+                Name: "test",
+                Price: 3000
             }
         }
     }
@@ -21,7 +32,7 @@ class App extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(this.state.data)
+            body: JSON.stringify(this.state.test)
         })
             .then(response => response.json())
             .then(data => this.setState({ data: data }));

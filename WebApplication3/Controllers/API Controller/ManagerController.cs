@@ -22,15 +22,22 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public ShopItem SendAndGetItem([FromBody]ShopItem item)
+        public List<ShopItem> SendAndGetItem(ShopItem item)
         {
-            ShopItem demo = item;
-            return new ShopItem
+            List<ShopItem> Items = new List<ShopItem>();
+            Items.Add(new ShopItem
             {
-                Id = 2,
-                Name = "XBox X",
-                Price = 10000,
-            };
+                Id = 4,
+                Name = "Yo",
+                Price = 1
+            });
+            Items.Add(new ShopItem
+            {
+                Id = 6,
+                Name = "Hey",
+                Price = 2
+            });
+            return Items;
         }
     }
 }
