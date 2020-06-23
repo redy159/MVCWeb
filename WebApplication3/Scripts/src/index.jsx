@@ -7,9 +7,9 @@ class App extends React.Component {
         super(props);
         this.state = {
             data: {
-                Name: "Testing",
-                Price: 1,
-                Manufactor:"Random"
+                name: "Testing2",
+                price: 3,
+                categoryId:1,
             },
             test: {
                 Id: 9,
@@ -21,17 +21,14 @@ class App extends React.Component {
 
     componentDidMount() {
         fetch('/api/Manager/AddProduct', {
-            method: "POST",
+            method: "Post",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.state.data)
         })
-            .then(response => response.json())
-            .then(data => {
-                this.setState({test:data})
-            });
+            .then(response => {response.text() ? response.json(): {}});
     }
 
     render() {

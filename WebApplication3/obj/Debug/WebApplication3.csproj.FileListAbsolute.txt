@@ -87,3 +87,4 @@ C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.SqlServer.dll
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.xml
 C:\Users\Master\source\repos\WebApplication3\WebApplication3\bin\EntityFramework.SqlServer.xml
+C:\Users\Master\source\repos\WebApplication3\WebApplication3\obj\Debug\WebApplication3.csprojAssemblyReference.cache

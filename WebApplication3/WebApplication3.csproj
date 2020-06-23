@@ -163,6 +163,7 @@
     <Compile Include="ImageFile.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ShopItem.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
@@ -253,6 +254,8 @@
       <DependentUpon>ShopWeb.edmx</DependentUpon>
     </Content>
     <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\CreateNew.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

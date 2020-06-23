@@ -249,7 +249,7 @@ img {
 
 #templatemo_content_wrapper {
 	clear: both;
-	width: 980px;
+	width: 100%;
 	margin: 0 auto;
 	background: #ffffff;
 }
