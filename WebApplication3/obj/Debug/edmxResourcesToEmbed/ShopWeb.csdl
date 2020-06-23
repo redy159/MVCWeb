@@ -1,23 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ShoppingWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="ShoppingWebEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Brands" EntityType="ShoppingWebModel.Brand" />
+    <EntitySet Name="Categories" EntityType="ShoppingWebModel.Category" />
     <EntitySet Name="ImageFiles" EntityType="ShoppingWebModel.ImageFile" />
     <EntitySet Name="Products" EntityType="ShoppingWebModel.Product" />
+    <EntitySet Name="Receipts" EntityType="ShoppingWebModel.Receipt" />
+    <EntitySet Name="Receipt_Product" EntityType="ShoppingWebModel.Receipt_Product" />
+    <EntitySet Name="Users" EntityType="ShoppingWebModel.User" />
+    <AssociationSet Name="FK_Product_Brand" Association="ShoppingWebModel.FK_Product_Brand">
+      <End Role="Brand" EntitySet="Brands" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Category" Association="ShoppingWebModel.FK_Product_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
     <AssociationSet Name="FK_Product_ImageFile" Association="ShoppingWebModel.FK_Product_ImageFile">
       <End Role="ImageFile" EntitySet="ImageFiles" />
       <End Role="Product" EntitySet="Products" />
     </AssociationSet>
-    <EntitySet Name="Receipts" EntityType="ShoppingWebModel.Receipt" />
-    <EntitySet Name="Users" EntityType="ShoppingWebModel.User" />
+    <AssociationSet Name="FK_Receipt_Product_Product" Association="ShoppingWebModel.FK_Receipt_Product_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Receipt_Product" EntitySet="Receipt_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Product_Receipt" Association="ShoppingWebModel.FK_Receipt_Product_Receipt">
+      <End Role="Receipt" EntitySet="Receipts" />
+      <End Role="Receipt_Product" EntitySet="Receipt_Product" />
+    </AssociationSet>
     <AssociationSet Name="FK_Receipt_User" Association="ShoppingWebModel.FK_Receipt_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Receipt" EntitySet="Receipts" />
     </AssociationSet>
-    <AssociationSet Name="Receipt_Product" Association="ShoppingWebModel.Receipt_Product">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="Receipt" EntitySet="Receipts" />
-    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="ShoppingWebModel.FK_Product_Brand" FromRole="Brand" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="ShoppingWebModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
+  </EntityType>
   <EntityType Name="ImageFile">
     <Key>
       <PropertyRef Name="Id" />
@@ -33,34 +64,39 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Price" Type="Int32" />
-    <Property Name="Manufactor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="BrandId" Type="Int32" Nullable="false" />
     <Property Name="Image" Type="Int32" />
     <Property Name="RegionId" Type="Int32" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Brand" Relationship="ShoppingWebModel.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
+    <NavigationProperty Name="Category" Relationship="ShoppingWebModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="ImageFile" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="Product" ToRole="ImageFile" />
-    <NavigationProperty Name="Receipts" Relationship="ShoppingWebModel.Receipt_Product" FromRole="Product" ToRole="Receipt" />
+    <NavigationProperty Name="Receipt_Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Product" FromRole="Product" ToRole="Receipt_Product" />
   </EntityType>
-  <Association Name="FK_Product_ImageFile">
-    <End Type="ShoppingWebModel.ImageFile" Role="ImageFile" Multiplicity="0..1" />
-    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ImageFile">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Product">
-        <PropertyRef Name="Image" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Receipt">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="Total" Type="Int32" Nullable="false" />
+    <Property Name="Payment" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Receipt_Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Receipt" FromRole="Receipt" ToRole="Receipt_Product" />
     <NavigationProperty Name="User" Relationship="ShoppingWebModel.FK_Receipt_User" FromRole="Receipt" ToRole="User" />
-    <NavigationProperty Name="Products" Relationship="ShoppingWebModel.Receipt_Product" FromRole="Receipt" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Receipt_Product">
+    <Key>
+      <PropertyRef Name="ReceiptId" />
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ReceiptId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+    <Property Name="ProductCount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Product" FromRole="Receipt_Product" ToRole="Product" />
+    <NavigationProperty Name="Receipt" Relationship="ShoppingWebModel.FK_Receipt_Product_Receipt" FromRole="Receipt_Product" ToRole="Receipt" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -73,6 +109,66 @@
     <Property Name="UserType" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Receipts" Relationship="ShoppingWebModel.FK_Receipt_User" FromRole="User" ToRole="Receipt" />
   </EntityType>
+  <Association Name="FK_Product_Brand">
+    <End Type="ShoppingWebModel.Brand" Role="Brand" Multiplicity="1" />
+    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brand">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BrandId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Category">
+    <End Type="ShoppingWebModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ImageFile">
+    <End Type="ShoppingWebModel.ImageFile" Role="ImageFile" Multiplicity="0..1" />
+    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImageFile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Image" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_Product_Product">
+    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="ShoppingWebModel.Receipt_Product" Role="Receipt_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipt_Product">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_Product_Receipt">
+    <End Type="ShoppingWebModel.Receipt" Role="Receipt" Multiplicity="1" />
+    <End Type="ShoppingWebModel.Receipt_Product" Role="Receipt_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipt">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipt_Product">
+        <PropertyRef Name="ReceiptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Receipt_User">
     <End Type="ShoppingWebModel.User" Role="User" Multiplicity="0..1" />
     <End Type="ShoppingWebModel.Receipt" Role="Receipt" Multiplicity="*" />
@@ -84,9 +180,5 @@
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
-  </Association>
-  <Association Name="Receipt_Product">
-    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
-    <End Type="ShoppingWebModel.Receipt" Role="Receipt" Multiplicity="*" />
   </Association>
 </Schema>

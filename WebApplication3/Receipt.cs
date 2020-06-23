@@ -17,15 +17,17 @@ namespace WebApplication3
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Receipt()
         {
-            this.Products = new HashSet<Product>();
+            this.Receipt_Product = new HashSet<Receipt_Product>();
         }
     
         public int Id { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> UserId { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int Total { get; set; }
+        public int Payment { get; set; }
     
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Receipt_Product> Receipt_Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

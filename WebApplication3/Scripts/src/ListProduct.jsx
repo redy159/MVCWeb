@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import {Input, TextArea, GenericInput} from 'react-text-input';
 
 class ListProduct extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class ListProduct extends React.Component {
     render() {
         return (
             <React.Fragment>
-
+                <Input/>
             </React.Fragment>
             )
     }

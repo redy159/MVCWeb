@@ -37,7 +37,7 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public async Task<List<Product>> AddProduct(Product data)
+        public async void AddProduct(Product data)
         {
             Product tmp = data;
             try
@@ -47,9 +47,8 @@ namespace WebApplication3.Controllers.API_Controller
             }
             catch (Exception e)
             {
-                
+
             }
-            return await GetAll();
         }
 
         [HttpPost]

@@ -2,7 +2,8 @@
 
 module.exports = {
   entry: {
-    index: "./Scripts/src/index.jsx"
+      index: "./Scripts/src/index.jsx",
+      listProduct:"./Scripts/src/ListProduct.jsx"
   },
   output: {
     path: path.resolve(__dirname, "../dist"),

@@ -25,9 +25,12 @@ namespace WebApplication3
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Brand> Brands { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<ImageFile> ImageFiles { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
+        public virtual DbSet<Receipt_Product> Receipt_Product { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }
