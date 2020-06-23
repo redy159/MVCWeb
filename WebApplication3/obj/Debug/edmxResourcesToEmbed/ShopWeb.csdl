@@ -7,6 +7,16 @@
       <End Role="ImageFile" EntitySet="ImageFiles" />
       <End Role="Product" EntitySet="Products" />
     </AssociationSet>
+    <EntitySet Name="Receipts" EntityType="ShoppingWebModel.Receipt" />
+    <EntitySet Name="Users" EntityType="ShoppingWebModel.User" />
+    <AssociationSet Name="FK_Receipt_User" Association="ShoppingWebModel.FK_Receipt_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Receipt" EntitySet="Receipts" />
+    </AssociationSet>
+    <AssociationSet Name="Receipt_Product" Association="ShoppingWebModel.Receipt_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Receipt" EntitySet="Receipts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="ImageFile">
     <Key>
@@ -28,6 +38,7 @@
     <Property Name="Image" Type="Int32" />
     <Property Name="RegionId" Type="Int32" />
     <NavigationProperty Name="ImageFile" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="Product" ToRole="ImageFile" />
+    <NavigationProperty Name="Receipts" Relationship="ShoppingWebModel.Receipt_Product" FromRole="Product" ToRole="Receipt" />
   </EntityType>
   <Association Name="FK_Product_ImageFile">
     <End Type="ShoppingWebModel.ImageFile" Role="ImageFile" Multiplicity="0..1" />
@@ -40,5 +51,42 @@
         <PropertyRef Name="Image" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Receipt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="ShoppingWebModel.FK_Receipt_User" FromRole="Receipt" ToRole="User" />
+    <NavigationProperty Name="Products" Relationship="ShoppingWebModel.Receipt_Product" FromRole="Receipt" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UserType" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Receipts" Relationship="ShoppingWebModel.FK_Receipt_User" FromRole="User" ToRole="Receipt" />
+  </EntityType>
+  <Association Name="FK_Receipt_User">
+    <End Type="ShoppingWebModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="ShoppingWebModel.Receipt" Role="Receipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipt">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Receipt_Product">
+    <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+    <End Type="ShoppingWebModel.Receipt" Role="Receipt" Multiplicity="*" />
   </Association>
 </Schema>

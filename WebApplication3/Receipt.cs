@@ -12,23 +12,20 @@ namespace WebApplication3
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Receipt
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Receipt()
         {
-            this.Receipts = new HashSet<Receipt>();
+            this.Products = new HashSet<Product>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Price { get; set; }
-        public string Manufactor { get; set; }
-        public Nullable<int> Image { get; set; }
-        public Nullable<int> RegionId { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> UserId { get; set; }
     
-        public virtual ImageFile ImageFile { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Receipt> Receipts { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

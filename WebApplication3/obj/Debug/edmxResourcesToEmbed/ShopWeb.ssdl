@@ -19,6 +19,32 @@
     <Property Name="Image" Type="int" />
     <Property Name="RegionId" Type="int" />
   </EntityType>
+  <EntityType Name="Receipt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="Receipt_Product">
+    <Key>
+      <PropertyRef Name="ReceiptId" />
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ReceiptId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="UserType" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="FK_Product_ImageFile">
     <End Role="ImageFile" Type="Self.ImageFile" Multiplicity="0..1" />
     <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -31,12 +57,63 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Receipt_Product_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipt_Product">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_Product_Receipt">
+    <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+    <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipt">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipt_Product">
+        <PropertyRef Name="ReceiptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipt_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipt">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ShoppingWebModelStoreContainer">
     <EntitySet Name="ImageFile" EntityType="Self.ImageFile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipt_Product" EntityType="Self.Receipt_Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Product_ImageFile" Association="Self.FK_Product_ImageFile">
       <End Role="ImageFile" EntitySet="ImageFile" />
       <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Product_Product" Association="Self.FK_Receipt_Product_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Receipt_Product" EntitySet="Receipt_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_Product_Receipt" Association="Self.FK_Receipt_Product_Receipt">
+      <End Role="Receipt" EntitySet="Receipt" />
+      <End Role="Receipt_Product" EntitySet="Receipt_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipt_User" Association="Self.FK_Receipt_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Receipt" EntitySet="Receipt" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

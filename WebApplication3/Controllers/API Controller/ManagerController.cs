@@ -37,19 +37,19 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public void AddProduct(Product data)
+        public async Task<List<Product>> AddProduct(Product data)
         {
             Product tmp = data;
             try
             {
                 _db.Products.Add(tmp);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception e)
             {
-
+                
             }
-            return;
+            return await GetAll();
         }
 
         [HttpPost]

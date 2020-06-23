@@ -8,6 +8,10 @@
         <EntityTypeShape EntityType="ShoppingWebModel.ImageFile" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="ShoppingWebModel.Product" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="ShoppingWebModel.FK_Product_ImageFile" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Receipt" Width="1.5" PointX="6.625" PointY="1.375" />
+        <EntityTypeShape EntityType="ShoppingWebModel.User" Width="1.5" PointX="4.375" PointY="5.375" />
+        <AssociationConnector Association="ShoppingWebModel.FK_Receipt_User" />
+        <AssociationConnector Association="ShoppingWebModel.Receipt_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

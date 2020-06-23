@@ -29,7 +29,9 @@ class App extends React.Component {
             body: JSON.stringify(this.state.data)
         })
             .then(response => response.json())
-            .then(data => { });
+            .then(data => {
+                this.setState({test:data})
+            });
     }
 
     render() {
