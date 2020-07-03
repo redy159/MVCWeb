@@ -3,7 +3,6 @@
 module.exports = {
   entry: {
       index: "./Scripts/src/index.jsx",
-      listProduct:"./Scripts/src/ListProduct.jsx"
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
@@ -17,7 +16,8 @@ module.exports = {
           },
           test: /\.jsx$/,
           exclude: /node_modules/ //excludes node_modules folder from being transpiled by babel. We do this because it's a waste of resources to do so.
-        }
+        },
+        { use: ["css-loader", "style-loader"], test: /\.css$/, }
     ]
   }
 }

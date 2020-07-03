@@ -17,6 +17,7 @@ namespace WebApplication3
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.ProductReviews = new HashSet<ProductReview>();
             this.Receipt_Product = new HashSet<Receipt_Product>();
         }
     
@@ -31,6 +32,8 @@ namespace WebApplication3
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
         public virtual ImageFile ImageFile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductReview> ProductReviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt_Product> Receipt_Product { get; set; }
     }
