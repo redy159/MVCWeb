@@ -19,6 +19,47 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
+        public async Task<List<Sport>> GetSportMenu()
+        {
+            List<Sport> data = new List<Sport>();
+            //data = await (from s in _db.Sports.Include(p => p.Categories)
+            //              select s).ToListAsync();
+            data = new List<Sport>() {
+                new Sport()
+                {
+                    Id = 1,
+                    Name = "Bóng đá",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 1, Name = "Banh (bóng đá)"},
+                        new Category(){ Id = 2, Name = "Găng"},
+                    }
+                },
+                new Sport()
+                {
+                    Id = 2,
+                    Name = "Bóng rổ",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 3, Name = "Banh (bóng rổ)"},
+                        new Category(){ Id = 4, Name = "Giày"},
+                    }
+                },
+                new Sport()
+                {
+                    Id = 3,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+           };
+            return data;
+        }
+
+        [HttpGet]
         public async Task<List<Product>> GetAll()
         {
             List<Product> data = new List<Product>();
