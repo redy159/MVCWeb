@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Test from './Component/test.jsx';
+import Header from './Component/Header.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -37,7 +38,8 @@ class App extends React.Component {
         return (
             <React.Fragment>
                 <Test/>
-                <div className="commentBox">Hello, world! I</div>
+                <Header/>
+                <div className="commentBox">Hello, world! I</div> 
                 <div>{data.ID}</div>
                 <div>{data.Name}</div>
                 <div>{data.Price}</div>
