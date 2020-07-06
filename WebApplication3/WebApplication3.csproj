@@ -193,6 +193,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ShopWeb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Sport.cs">
+      <DependentUpon>ShopWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>

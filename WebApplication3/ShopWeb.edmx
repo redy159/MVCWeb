@@ -18,6 +18,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SportId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ImageFile">
           <Key>
@@ -35,8 +36,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
           <Property Name="BrandId" Type="int" Nullable="false" />
-          <Property Name="Image" Type="int" />
-          <Property Name="RegionId" Type="int" />
+          <Property Name="ImageId" Type="int" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductReview">
@@ -70,6 +70,13 @@
           <Property Name="TotalPrice" Type="int" Nullable="false" />
           <Property Name="ProductCount" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Sport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -80,8 +87,22 @@
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" />
           <Property Name="UserType" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Category_Sport">
+          <End Role="Sport" Type="Self.Sport" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="SportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Brand">
-          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Brand">
@@ -93,7 +114,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
@@ -105,19 +128,23 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ImageFile">
-          <End Role="ImageFile" Type="Self.ImageFile" Multiplicity="0..1" />
+          <End Role="ImageFile" Type="Self.ImageFile" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImageFile">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="Image" />
+              <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductReview_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ProductReview" Type="Self.ProductReview" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -129,7 +156,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductReview_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ProductReview" Type="Self.ProductReview" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -141,7 +170,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_Product_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -153,7 +184,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_Product_Receipt">
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Receipt">
@@ -165,7 +198,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -184,7 +219,12 @@
           <EntitySet Name="ProductReview" EntityType="Self.ProductReview" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipt_Product" EntityType="Self.Receipt_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sport" EntityType="Self.Sport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Category_Sport" Association="Self.FK_Category_Sport">
+            <End Role="Sport" EntitySet="Sport" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
           <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
             <End Role="Brand" EntitySet="Brand" />
             <End Role="Product" EntitySet="Product" />
@@ -226,11 +266,28 @@
           <EntitySet Name="Brands" EntityType="ShoppingWebModel.Brand" />
           <EntitySet Name="Categories" EntityType="ShoppingWebModel.Category" />
           <EntitySet Name="ImageFiles" EntityType="ShoppingWebModel.ImageFile" />
-          <EntitySet Name="Products" EntityType="ShoppingWebModel.Product" />
           <EntitySet Name="ProductReviews" EntityType="ShoppingWebModel.ProductReview" />
           <EntitySet Name="Receipts" EntityType="ShoppingWebModel.Receipt" />
           <EntitySet Name="Receipt_Product" EntityType="ShoppingWebModel.Receipt_Product" />
           <EntitySet Name="Users" EntityType="ShoppingWebModel.User" />
+          <AssociationSet Name="FK_ProductReview_User" Association="ShoppingWebModel.FK_ProductReview_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProductReview" EntitySet="ProductReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Product_Receipt" Association="ShoppingWebModel.FK_Receipt_Product_Receipt">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="Receipt_Product" EntitySet="Receipt_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_User" Association="ShoppingWebModel.FK_Receipt_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <EntitySet Name="Sports" EntityType="ShoppingWebModel.Sport" />
+          <AssociationSet Name="FK_Category_Sport" Association="ShoppingWebModel.FK_Category_Sport">
+            <End Role="Sport" EntitySet="Sports" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <EntitySet Name="Products" EntityType="ShoppingWebModel.Product" />
           <AssociationSet Name="FK_Product_Brand" Association="ShoppingWebModel.FK_Product_Brand">
             <End Role="Brand" EntitySet="Brands" />
             <End Role="Product" EntitySet="Products" />
@@ -251,18 +308,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Receipt_Product" EntitySet="Receipt_Product" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductReview_User" Association="ShoppingWebModel.FK_ProductReview_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ProductReview" EntitySet="ProductReviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Receipt_Product_Receipt" Association="ShoppingWebModel.FK_Receipt_Product_Receipt">
-            <End Role="Receipt" EntitySet="Receipts" />
-            <End Role="Receipt_Product" EntitySet="Receipt_Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Receipt_User" Association="ShoppingWebModel.FK_Receipt_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Receipt" EntitySet="Receipts" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Brand">
           <Key>
@@ -278,6 +323,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SportId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sport" Relationship="ShoppingWebModel.FK_Category_Sport" FromRole="Category" ToRole="Sport" />
           <NavigationProperty Name="Products" Relationship="ShoppingWebModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
         </EntityType>
         <EntityType Name="ImageFile">
@@ -288,24 +335,7 @@
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="ImageFile" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
-          <Property Name="BrandId" Type="Int32" Nullable="false" />
-          <Property Name="Image" Type="Int32" />
-          <Property Name="RegionId" Type="Int32" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Brand" Relationship="ShoppingWebModel.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
-          <NavigationProperty Name="Category" Relationship="ShoppingWebModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="ImageFile" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="Product" ToRole="ImageFile" />
-          <NavigationProperty Name="ProductReviews" Relationship="ShoppingWebModel.FK_ProductReview_Product" FromRole="Product" ToRole="ProductReview" />
-          <NavigationProperty Name="Receipt_Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Product" FromRole="Product" ToRole="Receipt_Product" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="ProductReview">
           <Key>
             <PropertyRef Name="Id" />
@@ -316,8 +346,8 @@
           <Property Name="ReviewContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Product" Relationship="ShoppingWebModel.FK_ProductReview_Product" FromRole="ProductReview" ToRole="Product" />
           <NavigationProperty Name="User" Relationship="ShoppingWebModel.FK_ProductReview_User" FromRole="ProductReview" ToRole="User" />
+          <NavigationProperty Name="Product" Relationship="ShoppingWebModel.FK_ProductReview_Product" FromRole="ProductReview" ToRole="Product" />
         </EntityType>
         <EntityType Name="Receipt">
           <Key>
@@ -340,8 +370,8 @@
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="TotalPrice" Type="Int32" Nullable="false" />
           <Property Name="ProductCount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Product" FromRole="Receipt_Product" ToRole="Product" />
           <NavigationProperty Name="Receipt" Relationship="ShoppingWebModel.FK_Receipt_Product_Receipt" FromRole="Receipt_Product" ToRole="Receipt" />
+          <NavigationProperty Name="Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Product" FromRole="Receipt_Product" ToRole="Product" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -355,66 +385,6 @@
           <NavigationProperty Name="ProductReviews" Relationship="ShoppingWebModel.FK_ProductReview_User" FromRole="User" ToRole="ProductReview" />
           <NavigationProperty Name="Receipts" Relationship="ShoppingWebModel.FK_Receipt_User" FromRole="User" ToRole="Receipt" />
         </EntityType>
-        <Association Name="FK_Product_Brand">
-          <End Type="ShoppingWebModel.Brand" Role="Brand" Multiplicity="1" />
-          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brand">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="BrandId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_Category">
-          <End Type="ShoppingWebModel.Category" Role="Category" Multiplicity="1" />
-          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_ImageFile">
-          <End Type="ShoppingWebModel.ImageFile" Role="ImageFile" Multiplicity="0..1" />
-          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImageFile">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="Image" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductReview_Product">
-          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="ShoppingWebModel.ProductReview" Role="ProductReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductReview">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Receipt_Product_Product">
-          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="ShoppingWebModel.Receipt_Product" Role="Receipt_Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Receipt_Product">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductReview_User">
           <End Type="ShoppingWebModel.User" Role="User" Multiplicity="1" />
           <End Type="ShoppingWebModel.ProductReview" Role="ProductReview" Multiplicity="*" />
@@ -451,6 +421,112 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Sport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="ShoppingWebModel.FK_Category_Sport" FromRole="Sport" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_Category_Sport">
+          <End Type="ShoppingWebModel.Sport" Role="Sport" Multiplicity="1" />
+          <End Type="ShoppingWebModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="SportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Brand" Relationship="ShoppingWebModel.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="Category" Relationship="ShoppingWebModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="ImageFile" Relationship="ShoppingWebModel.FK_Product_ImageFile" FromRole="Product" ToRole="ImageFile" />
+          <NavigationProperty Name="ProductReviews" Relationship="ShoppingWebModel.FK_ProductReview_Product" FromRole="Product" ToRole="ProductReview" />
+          <NavigationProperty Name="Receipt_Product" Relationship="ShoppingWebModel.FK_Receipt_Product_Product" FromRole="Product" ToRole="Receipt_Product" />
+        </EntityType>
+        <Association Name="FK_Product_Brand">
+          <End Type="ShoppingWebModel.Brand" Role="Brand" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Type="ShoppingWebModel.Category" Role="Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ImageFile">
+          <End Type="ShoppingWebModel.ImageFile" Role="ImageFile" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageFile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductReview_Product">
+          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShoppingWebModel.ProductReview" Role="ProductReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductReview">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_Product_Product">
+          <End Type="ShoppingWebModel.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShoppingWebModel.Receipt_Product" Role="Receipt_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt_Product">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -468,6 +544,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="ShoppingWebModel.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="SportId" ColumnName="SportId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -478,19 +555,6 @@
               <MappingFragment StoreEntitySet="ImageFile">
                 <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -534,6 +598,26 @@
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sports">
+            <EntityTypeMapping TypeName="ShoppingWebModel.Sport">
+              <MappingFragment StoreEntitySet="Sport">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ShoppingWebModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

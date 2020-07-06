@@ -12,16 +12,18 @@ namespace WebApplication3
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductReview
+    public partial class Sport
     {
-        public int UserId { get; set; }
-        public int ProductId { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public string ReviewContent { get; set; }
-        public int Rating { get; set; }
-        public int Id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Sport()
+        {
+            this.Categories = new HashSet<Category>();
+        }
     
-        public virtual User User { get; set; }
-        public virtual Product Product { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }
