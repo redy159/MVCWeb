@@ -37,12 +37,7 @@ class App extends React.Component {
         const { data } = this.state;
         return (
             <React.Fragment>
-                <Test/>
                 <Header/>
-                <div className="commentBox">Hello, world! I</div> 
-                <div>{data.ID}</div>
-                <div>{data.Name}</div>
-                <div>{data.Price}</div>
             </React.Fragment>
         );
     }
