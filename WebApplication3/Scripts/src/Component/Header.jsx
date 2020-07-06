@@ -1,6 +1,11 @@
 import React from 'react';
 import './../../../Content/header.css'
 export default class Header extends React.Component {
+    constructor(props)
+    {
+        super(props)
+        this.state = {}
+    }
     componentDidMount() {
         fetch('/api/Manager/GetSportMenu', {
             method: "Get",
@@ -8,12 +13,14 @@ export default class Header extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(this.state.data)
         })
-            .then(response => {response.text() ? response.json(): {}});
+            .then(response => response.json())
+            .then(data=> this.setState({data:data}));
+        
     }
 
     render() {
+        if (!this.state.data) return null;
         console.log(this.state.data? this.state.data : "000");
         return (
             <div>
@@ -21,18 +28,17 @@ export default class Header extends React.Component {
                     <div class="container">
                         <div class="row">
                             <ul class="col flex justify-content-between">
-                            
-                            <p>Hello, {person.name} from {person.country}!</p>
+                            {this.state.data.map((item) => (
                                 <li class="dropdown">
-                                    <a><strong>Football</strong></a>
+                                    <a><strong>{item.Name}</strong></a>
+                                    {console.log(item.Categories)}
                                     <ul class="dropdown-content">
-                                        <li><a href="">Football Helmets</a></li>
-                                        <li><a href="">Facemasks</a></li>
-                                        <li><a href="">Gloves</a></li>
-                                        <li><a href="">Pants</a></li>
-                                        <li><a href="">Shoulder Pads</a></li>
+                                        {item.Categories.map((cate) => (
+                                            <li><a href="">{cate.Name}</a></li>
+                                        ))}
                                     </ul>
                                 </li>
+                            ))}
                             </ul>
                         </div>
                     </div>
