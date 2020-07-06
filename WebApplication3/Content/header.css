@@ -17,10 +17,9 @@ a:hover {
 
 .row {
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    width: 850px;
+    margin: auto;
 }
 
 .navagation ul.flex {
@@ -104,5 +103,6 @@ a:hover {
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
+    padding: 0 20px;
 }
 
