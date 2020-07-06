@@ -11,16 +11,15 @@ a:hover {
 }
 
 .navigation {
-    background: #ffb0bd;
+    background: #27496d;
     position: relative;
 }
 
 .row {
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    width: 850px;
+    margin: auto;
 }
 
 .navagation ul.flex {
@@ -44,7 +43,7 @@ a:hover {
 
 .navagation li a {
     display: inline-block;
-    color: #8a4762;
+    color: #ffffff;
     font-size: 15px;
     padding: 12px 5px 9px;
     font-weight: 700;
@@ -66,7 +65,7 @@ a:hover {
 
 .dropdown a {
     display: inline-block;
-    color: #8a4762;
+    color: #ffffff;
     font-size: 15px;
     padding: 12px 5px 9px;
     font-weight: 700;
@@ -76,7 +75,7 @@ a:hover {
     display: none;
     position: absolute;
     z-index: 1;
-    background: #fbd6db;
+    background: #142850;
     min-width: 180px;
     padding: 0;
 }
@@ -94,7 +93,7 @@ a:hover {
 .dropdown-content li a {
     padding: 10px;
     font-weight: 400;
-    color: #8a4762;
+    color: #ffffff;
     font-size: 15px;
     display: inline-block;
 }
@@ -104,5 +103,6 @@ a:hover {
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
+    padding: 0 20px;
 }
 

@@ -55,9 +55,68 @@ namespace WebApplication3.Controllers.API_Controller
                         new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
                         new Category(){ Id = 6, Name = "Đồng phục"},
                     }
+                },
+                new Sport()
+                {
+                    Id = 3,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+                ,
+                new Sport()
+                {
+                    Id = 4,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+                ,
+                new Sport()
+                {
+                    Id = 5,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
                 }
            };
                 return data;
+        }
+
+        [HttpGet]
+        public async Task<List<Product>> GetNewestProduct()
+        {
+            List<Product> data = new List<Product>();
+            //data = await (from p in _db.Products
+            //              orderby p.Id descending
+            //              select p).Take(10).ToListAsync();
+
+            for (int i = 0; i<10; i++)
+            {
+                data.Add(new Product()
+                {
+                    Id = i+1,
+                    Name = "Bóng Michael Jordan",
+                    Brand = new Brand()
+                    {
+                        Id = 1,
+                        Name = "Sony",
+                    },
+                    Price = 20000,
+                    BrandId = 1,
+                    CategoryId = 1,
+                });
+            }
+            return data;
         }
 
         [HttpGet]
