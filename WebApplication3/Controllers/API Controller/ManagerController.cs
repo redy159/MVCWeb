@@ -55,6 +55,38 @@ namespace WebApplication3.Controllers.API_Controller
                         new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
                         new Category(){ Id = 6, Name = "Đồng phục"},
                     }
+                },
+                new Sport()
+                {
+                    Id = 3,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+                ,
+                new Sport()
+                {
+                    Id = 4,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+                ,
+                new Sport()
+                {
+                    Id = 5,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
                 }
            };
                 return data;
