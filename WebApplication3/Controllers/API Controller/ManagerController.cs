@@ -105,7 +105,7 @@ namespace WebApplication3.Controllers.API_Controller
                 data.Add(new Product()
                 {
                     Id = i+1,
-                    Name = "Bóng Michael Jordan",
+                    Name = "Bóng Michael Jordan "+(i+1),
                     Brand = new Brand()
                     {
                         Id = 1,
