@@ -16,6 +16,7 @@ namespace WebApplication3.Controllers.API_Controller
         public ManagerController()
         {
             _db = new ShoppingWebEntities();
+            _db.Configuration.LazyLoadingEnabled = false;
         }
 
         [HttpGet]

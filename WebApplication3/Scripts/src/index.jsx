@@ -21,15 +21,6 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/api/Manager/AddProduct', {
-            method: "Post",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.data)
-        })
-            .then(response => {response.text() ? response.json(): {}});
     }
 
     render() {
