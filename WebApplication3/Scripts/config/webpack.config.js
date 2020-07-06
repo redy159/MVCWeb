@@ -3,6 +3,7 @@
 module.exports = {
   entry: {
       index: "./Scripts/src/index.jsx",
+      header: "./Scripts/src/Component/header.jsx",
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
