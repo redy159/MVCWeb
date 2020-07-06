@@ -156,7 +156,6 @@
     </Compile>
     <Compile Include="Controllers\API Controller\ManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,10 +257,8 @@
     <Content Include="ShopWeb.edmx.diagram">
       <DependentUpon>ShopWeb.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\CreateNew.cshtml" />
-    <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
