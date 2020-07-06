@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Test from './Component/test.jsx';
-import Header from './Component/Header.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -28,7 +27,6 @@ class App extends React.Component {
         const { data } = this.state;
         return (
             <React.Fragment>
-                <Header/>
             </React.Fragment>
         );
     }

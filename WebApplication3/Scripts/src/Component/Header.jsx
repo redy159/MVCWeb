@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom'
 import './../../../Content/header.css'
-export default class Header extends React.Component {
+class Header extends React.Component {
     constructor(props)
     {
         super(props)
@@ -23,7 +24,7 @@ export default class Header extends React.Component {
         if (!this.state.data) return null;
         console.log(this.state.data? this.state.data : "000");
         return (
-            <div>
+            <React.Fragment>
                 <div class="navigation">
                     <div class="container">
                         <div class="row">
@@ -43,7 +44,9 @@ export default class Header extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 }
+
+ReactDOM.render(<Header />, document.getElementById("header"));
