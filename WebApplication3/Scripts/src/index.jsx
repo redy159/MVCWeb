@@ -21,7 +21,8 @@ class App extends React.Component {
             .then(data=> this.setState({newProduct: data}));
     }
 
-    getNextPage() {
+    getNextPage(){
+        console.log(this)
         fetch('/api/Manager/GetNewestProduct?pageNumber=1', {
             method: "Get",
             headers: {
@@ -45,7 +46,7 @@ class App extends React.Component {
                         <Product data={item}/>
                     ))}
                 </div>
-                <div onClick={this.getNextPage}>Click</div>
+                <div onClick={this.getNextPage.bind(this)}>Click</div>
             </React.Fragment>
         );
     }
