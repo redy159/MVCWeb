@@ -1,32 +1,51 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Test from './Component/test.jsx';
+import Product from './Component/Product.jsx';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: {
-                name: "Testing2",
-                price: 3,
-                categoryId:1,
-            },
-            test: {
-                Id: 9,
-                Name: "test",
-                Price: 3000
-            }
-        }
+        this.state = {}
     }
 
     componentDidMount() {
+        fetch('/api/Manager/GetNewestProduct?pageNumber=0', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data=> this.setState({newProduct: data}));
     }
 
+    getNextPage() {
+        fetch('/api/Manager/GetNewestProduct?pageNumber=1', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data=> this.setState({newProduct: data}));
+    }
+    
+
     render() {
-        console.log(this.state.data);
-        const { data } = this.state;
+        if (!this.state.newProduct) return null;
+        console.log(this.state.newProduct? this.state.newProduct : "000");
+        const { newProduct } = this.state;
         return (
             <React.Fragment>
+                <div className="flex product-wrap">
+                    {newProduct.map((item)=> (
+                        <Product data={item}/>
+                    ))}
+                </div>
+                <div onClick={this.getNextPage}>Click</div>
             </React.Fragment>
         );
     }

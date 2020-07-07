@@ -93,14 +93,14 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
-        public async Task<List<Product>> GetNewestProduct()
-        {
+        public async Task<List<Product>> GetNewestProduct(int pageNumber)
+        { 
             List<Product> data = new List<Product>();
             //data = await (from p in _db.Products
             //              orderby p.Id descending
-            //              select p).Take(10).ToListAsync();
+            //              select p).Skip(pageNumber*8).Take(8).ToListAsync();
 
-            for (int i = 0; i<10; i++)
+            for (int i = 0; i<8; i++)
             {
                 data.Add(new Product()
                 {

@@ -22,7 +22,6 @@ class Header extends React.Component {
 
     render() {
         if (!this.state.data) return null;
-        console.log(this.state.data? this.state.data : "000");
         return (
             <React.Fragment>
                 <div class="navigation">
@@ -32,7 +31,6 @@ class Header extends React.Component {
                             {this.state.data.map((item) => (
                                 <li class="dropdown">
                                     <a><strong>{item.Name}</strong></a>
-                                    {console.log(item.Categories)}
                                     <ul class="dropdown-content">
                                         {item.Categories.map((cate) => (
                                             <li><a href="">{cate.Name}</a></li>

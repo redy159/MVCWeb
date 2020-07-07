@@ -1,0 +1,10 @@
+.product-item {
+    position: relative;
+    margin-bottom: 20px;
+    flex: 0 0 25%;
+    padding: 0 10px;
+    max-width: 200px;
+}
+.product-item img {
+    width: 100%;
+}

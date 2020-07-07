@@ -2,6 +2,13 @@
     padding: 0px;
 }
 
+.product-wrap {
+    width: 830px;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: space-between;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
