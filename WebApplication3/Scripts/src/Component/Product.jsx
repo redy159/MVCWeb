@@ -10,10 +10,13 @@ export default class Product extends React.Component {
         const { data } = this.props;
         return (
         <div className="product-item">
-            <img src="./../../../Content/images/comming-soon.png"/> 
+            <img src="./../../../Content/images/comming-soon.jpg"/> 
             <h3 class="name">
                 <a href="" title={data.Name}>{data.Name}</a>
             </h3>
+            <div class="product-price">
+                <span class="price">{data.Price.toLocaleString()} đ</span>
+            </div>
         </div>
         )
     }

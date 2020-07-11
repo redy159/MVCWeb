@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import Test from './Component/test.jsx';
 import Product from './Component/Product.jsx';
 
 class App extends React.Component {
@@ -46,7 +45,9 @@ class App extends React.Component {
                         <Product data={item}/>
                     ))}
                 </div>
-                <div onClick={this.getNextPage.bind(this)}>Click</div>
+                <div class="d-flex flex-row">
+                    <button type="button" class="btn btn-primary mr-auto ml-auto" onClick={this.getNextPage.bind(this)}>Load more</button>
+                </div>
             </React.Fragment>
         );
     }
