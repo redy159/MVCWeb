@@ -5,14 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ShoppingWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Brand">
+        <EntityType Name="Brands">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Category">
+        <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -20,26 +20,15 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SportId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="ImageFile">
+        <EntityType Name="ImageFiles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Image" Type="image" />
+          <Property Name="Image" Type="varbinary(max)" />
           <Property Name="ImageURL" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Price" Type="int" Nullable="false" />
-          <Property Name="BrandId" Type="int" Nullable="false" />
-          <Property Name="ImageId" Type="int" />
-          <Property Name="CategoryId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProductReview">
+        <EntityType Name="ProductReviews">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -50,15 +39,16 @@
           <Property Name="Rating" Type="int" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <EntityType Name="Receipt">
+        <EntityType Name="Products">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="Total" Type="int" Nullable="false" />
-          <Property Name="Payment" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="BrandId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Receipt_Product">
           <Key>
@@ -70,14 +60,24 @@
           <Property Name="TotalPrice" Type="int" Nullable="false" />
           <Property Name="ProductCount" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Sport">
+        <EntityType Name="Receipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Payment" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sports">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -88,94 +88,92 @@
           <Property Name="UserType" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Category_Sport">
-          <End Role="Sport" Type="Self.Sport" Multiplicity="1" />
-          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <End Role="Sports" Type="Self.Sports" Multiplicity="1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Sport">
+            <Principal Role="Sports">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Category">
+            <Dependent Role="Categories">
               <PropertyRef Name="SportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Brand">
-          <End Role="Brand" Type="Self.Brand" Multiplicity="1">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Brand">
+            <Principal Role="Brands">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="BrandId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Category">
+            <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ImageFile">
-          <End Role="ImageFile" Type="Self.ImageFile" Multiplicity="0..1">
+          <End Role="ImageFiles" Type="Self.ImageFiles" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ImageFile">
+            <Principal Role="ImageFiles">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Product">
+            <Dependent Role="Products">
               <PropertyRef Name="ImageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductReview_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ProductReview" Type="Self.ProductReview" Multiplicity="*" />
+          <End Role="ProductReviews" Type="Self.ProductReviews" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product">
+            <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductReview">
+            <Dependent Role="ProductReviews">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductReview_User">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ProductReview" Type="Self.ProductReview" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ProductReviews" Type="Self.ProductReviews" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductReview">
+            <Dependent Role="ProductReviews">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_Product_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product">
+            <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipt_Product">
@@ -184,12 +182,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_Product_Receipt">
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="1" />
           <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Receipt">
+            <Principal Role="Receipts">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipt_Product">
@@ -198,64 +194,62 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Receipt">
+            <Dependent Role="Receipts">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ShoppingWebModelStoreContainer">
-          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImageFile" EntityType="Self.ImageFile" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductReview" EntityType="Self.ProductReview" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageFiles" EntityType="Self.ImageFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductReviews" EntityType="Self.ProductReviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipt_Product" EntityType="Self.Receipt_Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sport" EntityType="Self.Sport" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sports" EntityType="Self.Sports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Category_Sport" Association="Self.FK_Category_Sport">
-            <End Role="Sport" EntitySet="Sport" />
-            <End Role="Category" EntitySet="Category" />
+            <End Role="Sports" EntitySet="Sports" />
+            <End Role="Categories" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
-            <End Role="Brand" EntitySet="Brand" />
-            <End Role="Product" EntitySet="Product" />
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Product" EntitySet="Product" />
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_ImageFile" Association="Self.FK_Product_ImageFile">
-            <End Role="ImageFile" EntitySet="ImageFile" />
-            <End Role="Product" EntitySet="Product" />
+            <End Role="ImageFiles" EntitySet="ImageFiles" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductReview_Product" Association="Self.FK_ProductReview_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductReview" EntitySet="ProductReview" />
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductReviews" EntitySet="ProductReviews" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductReview_User" Association="Self.FK_ProductReview_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="ProductReview" EntitySet="ProductReview" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ProductReviews" EntitySet="ProductReviews" />
           </AssociationSet>
           <AssociationSet Name="FK_Receipt_Product_Product" Association="Self.FK_Receipt_Product_Product">
-            <End Role="Product" EntitySet="Product" />
+            <End Role="Products" EntitySet="Products" />
             <End Role="Receipt_Product" EntitySet="Receipt_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Receipt_Product_Receipt" Association="Self.FK_Receipt_Product_Receipt">
-            <End Role="Receipt" EntitySet="Receipt" />
+            <End Role="Receipts" EntitySet="Receipts" />
             <End Role="Receipt_Product" EntitySet="Receipt_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Receipt_User" Association="Self.FK_Receipt_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Receipt" EntitySet="Receipt" />
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -531,101 +525,100 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ShoppingWebModelStoreContainer" CdmEntityContainer="ShoppingWebEntities">
-          <EntitySetMapping Name="Brands">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Brand">
-              <MappingFragment StoreEntitySet="Brand">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="SportId" ColumnName="SportId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ImageFiles">
-            <EntityTypeMapping TypeName="ShoppingWebModel.ImageFile">
-              <MappingFragment StoreEntitySet="ImageFile">
-                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductReviews">
-            <EntityTypeMapping TypeName="ShoppingWebModel.ProductReview">
-              <MappingFragment StoreEntitySet="ProductReview">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="ReviewContent" ColumnName="ReviewContent" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Receipts">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Receipt">
-              <MappingFragment StoreEntitySet="Receipt">
-                <ScalarProperty Name="Payment" ColumnName="Payment" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Receipt_Product">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Receipt_Product">
-              <MappingFragment StoreEntitySet="Receipt_Product">
-                <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ShoppingWebModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sports">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Sport">
-              <MappingFragment StoreEntitySet="Sport">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="ShoppingWebModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShoppingWebModelStoreContainer" CdmEntityContainer="ShoppingWebEntities">
+    <EntitySetMapping Name="Brands">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.Brand)">
+        <MappingFragment StoreEntitySet="Brands">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.Category)">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SportId" ColumnName="SportId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImageFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.ImageFile)">
+        <MappingFragment StoreEntitySet="ImageFiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductReviews">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.ProductReview)">
+        <MappingFragment StoreEntitySet="ProductReviews">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ReviewContent" ColumnName="ReviewContent" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receipts">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.Receipt)">
+        <MappingFragment StoreEntitySet="Receipts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receipt_Product">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.Receipt_Product)">
+        <MappingFragment StoreEntitySet="Receipt_Product">
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="UserType" ColumnName="UserType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sports">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.Sport)">
+        <MappingFragment StoreEntitySet="Sports">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="IsTypeOf(ShoppingWebModel.Product)">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+          <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -639,7 +632,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
