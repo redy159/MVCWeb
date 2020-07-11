@@ -3115,19 +3115,19 @@ fieldset[disabled] .btn-default.focus {
 }
 .btn-primary {
   color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+  background-color: #586ab8;
+  border-color: #586ab8;
 }
 .btn-primary:focus,
 .btn-primary.focus {
   color: #fff;
-  background-color: #286090;
+  background-color: #586ab8;
   border-color: #122b40;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #286090;
-  border-color: #204d74;
+  background-color: #586ab8;
+  border-color: #586ab8;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -3163,8 +3163,8 @@ fieldset[disabled] .btn-primary:focus,
 .btn-primary.disabled.focus,
 .btn-primary[disabled].focus,
 fieldset[disabled] .btn-primary.focus {
-  background-color: #337ab7;
-  border-color: #2e6da4;
+  background-color: #586ab8;
+  border-color: #586ab8;
 }
 .btn-primary .badge {
   color: #337ab7;
@@ -6753,5 +6753,20 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+.d-flex {
+  display: flex!important;
+}
+.flex-row {
+  flex-direction: row!important;
+}
+.flex-column {
+  flex-direction: column!important;
+}
+.mr-auto {
+  margin-right: auto!important;
+}
+.ml-auto {
+  margin-left: auto!important;
 }
 /*# sourceMappingURL=bootstrap.css.map */

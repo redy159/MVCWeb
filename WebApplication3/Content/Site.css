@@ -7,6 +7,7 @@
     flex-wrap: wrap;
     margin: auto;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
