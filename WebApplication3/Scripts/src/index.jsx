@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import Product from './Component/Product.jsx';
-
+import Carousel from './Component/Carousel.jsx';
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -40,6 +40,7 @@ class App extends React.Component {
         const { newProduct } = this.state;
         return (
             <React.Fragment>
+                <Carousel/>
                 <div className="flex product-wrap">
                     {newProduct.map((item)=> (
                         <Product data={item}/>
