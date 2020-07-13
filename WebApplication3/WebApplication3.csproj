@@ -163,6 +163,7 @@
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProductSearchModel.cs" />
     <Compile Include="Models\ShopItem.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>

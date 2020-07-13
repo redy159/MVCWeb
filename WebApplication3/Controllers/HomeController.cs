@@ -13,13 +13,15 @@ namespace WebApplication3.Controllers
             return View();
         }
 
-        public ActionResult ProductDetail()
+        public ActionResult ProductDetail(int id=0)
         {
+            ViewBag.param = id;
             return View();
         }
 
         public ActionResult ProductByCategory()
         {
+            
             return View();
         }
     }
