@@ -29,3 +29,19 @@ select,
 textarea {
     max-width: 280px;
 }
+/*This is for product detail*/
+.product-img {
+    width: 50%;
+    margin: 10px;
+    padding: 5px;
+}
+
+.product-img img {
+    width: 100%;
+}
+
+.product-info {
+    width: 40%;
+    margin-left: auto;
+    padding: 10px;
+}
