@@ -11,7 +11,7 @@ a:hover {
 }
 
 .navigation {
-    background: #27496d;
+    background: #586ab8;
     position: relative;
 }
 
@@ -61,6 +61,10 @@ a:hover {
 .dropdown {
     position: relative;
     display: inline-block;
+}
+
+.dropdown:hover {
+    cursor: pointer;
 }
 
 .dropdown a {

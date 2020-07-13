@@ -1,0 +1,29 @@
+.product-item {
+    position: relative;
+    margin-bottom: 20px;
+    flex: 0 0 25%;
+    padding: 0 10px;
+    max-width: 200px;
+}
+.product-item img {
+    width: 100%;
+}
+.product-item .name {
+    line-height: 1.5;
+    margin: 12px 0;
+    font-size: 15px;
+    min-height: 44px;
+    color: #333;
+    font-family: 'Nunito-Bold';
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.product-item .name a {
+    color: #333;
+}
+.product-price {
+    font-size: 17px;
+    color: #000;
+    font-weight: 700;
+    font-family: 'Nunito-ExtraBold';
+}
