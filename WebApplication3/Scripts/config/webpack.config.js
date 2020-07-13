@@ -4,6 +4,8 @@ module.exports = {
   entry: {
       index: "./Scripts/src/index.jsx",
       header: "./Scripts/src/Component/header.jsx",
+      productDetail: "./Scripts/src/ProductDetail.jsx",
+      productByCategory: "./Scripts/src/ProductByCategory.jsx",
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
