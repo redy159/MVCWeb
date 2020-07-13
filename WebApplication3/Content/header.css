@@ -18,7 +18,6 @@ a:hover {
 .row {
     display: flex;
     flex-wrap: wrap;
-    width: 850px;
     margin: auto;
 }
 
@@ -34,7 +33,7 @@ a:hover {
 
 
 .container {
-    width: 100%;
+    width: 950px;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
@@ -110,3 +109,20 @@ a:hover {
     padding: 0 20px;
 }
 
+.log-in {
+    margin: auto 0 auto auto;
+    color: #586ab8;
+    font-weight: 600;
+}
+.log-in:hover , .sign-up:hover {
+    color: #009dd1!important;
+}
+
+.sign-up {
+    margin: auto 0 auto 20px;
+    color: #586ab8;
+    font-weight: 600;
+}
+.logo {
+    cursor: pointer;
+}

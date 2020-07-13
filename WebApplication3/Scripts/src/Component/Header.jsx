@@ -24,6 +24,13 @@ class Header extends React.Component {
         if (!this.state.data) return null;
         return (
             <React.Fragment>
+                <div class="container flex flex-row pl-3 pr-3">
+                    <div class="logo">
+                        <a><h2>Sport <br/>Equipment</h2></a>
+                    </div>
+                    <button type="button" class="btn btn-light log-in">Đăng nhập</button>
+                    <button type="button" class="btn btn-light sign-up">Đăng ký</button>
+                </div>
                 <div class="navigation">
                     <div class="container">
                         <div class="row">
