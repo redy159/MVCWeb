@@ -44,3 +44,9 @@ textarea {
     margin-left: auto;
     padding: 30px 10px;
 }
+.footer {
+    background: #586ab8;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+}
