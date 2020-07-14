@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import { Modal } from "react-responsive-modal";
+import 'react-responsive-modal/styles.css';
 import './../../../Content/header.css'
 class Header extends React.Component {  
     constructor(props)
@@ -26,7 +27,7 @@ class Header extends React.Component {
         
     }
 
-    onOpenModal  () {
+    onOpenModal() {
         this.setState({ sign: true });
     };
 
@@ -54,8 +55,12 @@ class Header extends React.Component {
                     <div class="logo">
                         <a><h2>Sport <br />Equipment</h2></a>
                     </div>
-                    <button type="button" class="btn btn-light log-in" onClick={this.onOpenModalLogin} >Đăng nhập</button>
-                    <button type="button" class="btn btn-light sign-up" onClick={this.onOpenModal}>Đăng ký</button>           
+                    <button type="button" class="btn btn-light log-in"
+                        onClick={() => { this.onOpenModalLogin() }}
+                        >
+                        Đăng nhập
+                    </button>
+                    <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Đăng ký</button>           
                 </div>
                 <div class="navigation">
                     <div class="container">
@@ -78,10 +83,10 @@ class Header extends React.Component {
 
                 {/* Sign up model */}
 
-                <Modal open={sign} onClose={this.onCloseModal}>
+                <Modal open={sign} onClose={() => { this.onCloseModal() }} center>
                     <div className="modal-body">
                         <h2>Sign up<span> Free!</span></h2>
-                        <form className="form-signin" noValidate={true}>
+                        <form className="form-signin" novalidate="novalidate">
                         <div className="form-group">
                             <input className="form-control" type="text" name="name" id="name" placeholder="First Name" required="" autocomplete="off" aria-required="true" />
                         </div>
@@ -104,7 +109,7 @@ class Header extends React.Component {
                     <div className="modal-body">
                         <h2>Login and Get <span>Started</span></h2>
                         <span className="subtitle">Just fill in the form below</span>
-                        <form className="form-signin" noValidate={true}>
+                        <form className="form-signin" novalidate="novalidate">
                             <div className="form-group">
                                 <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" />
                             </div>
