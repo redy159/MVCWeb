@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import Product from './Component/Product.jsx';
 
 class ProductByCategory extends React.Component {
     constructor(props) {
@@ -27,9 +28,22 @@ class ProductByCategory extends React.Component {
 
     render() {
         if (!this.state.data) return null;
+        let { data } = this.state;
         console.log(this.state.data)
         return (
-            <div></div>
+            <div class="container">
+                <nav aria-label="breadcrumb" style={{ backgroundColor: "#fff!important"}}>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">{data.Category? data.Category : "Cate"}</a></li>
+                    </ol>
+                </nav>
+                <div className="flex product-wrap">
+                    {data.map((item) => (
+                        <Product data={item} />
+                    ))}
+                </div>
+            </div>
             )
     }
 }

@@ -23,9 +23,29 @@ class ProductDetail extends React.Component {
 
     render() {
         if (!this.state.data) return null;
-        console.log(this.state.data)
+        let { data } = this.state;
         return (
-            <div></div>
+            <div class="container">
+                <nav aria-label="breadcrumb" style={{ backgroundColor: "#fff!important"}}>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">{data.Category}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{data.Name}</li>
+                    </ol>
+                </nav>
+                <div class="flex flex-row">
+                    <div class="product-img">
+                        <img src="./../../../Content/images/comming-soon.jpg"/> 
+                    </div>
+                    <div class="product-info flex flex-column">
+                        <h1>{data.Name}</h1><br/><br/>
+                        <p>{data.Brand? data.Brand: ""}</p>
+                        <p>{data.Category? data.Category: ""}</p><br/><br/><br/>
+                        <h2>{data.Price? data.Price: ""}</h2><br/>
+                        <button type="button" class="btn btn-warning w-full p-5" >Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+            </div>
             )
     }
 }

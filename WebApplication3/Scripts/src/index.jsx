@@ -70,18 +70,6 @@ class App extends React.Component {
                     <button type="button" class="btn btn-primary mr-auto ml-auto" onClick={()=>{this.getNextPage()}}>Load more</button>
                 </div>
                 <br/><br/><br/><br/><br/>
-                <div class="container flex flex-row">
-                    <div class="product-img">
-                        <img src="./../../../Content/images/comming-soon.jpg"/> 
-                    </div>
-                    <div class="product-info flex flex-column">
-                        <h1>product name</h1><br/><br/>
-                        <p>product brand</p><br/>
-                        <p>product cate</p><br/><br/><br/>
-                        <h2>product price</h2><br/>
-                        <button type="button" class="btn btn-warning w-full p-5">Thêm vào giỏ hàng</button>
-                    </div>
-                </div>
             </React.Fragment>
         );
     }

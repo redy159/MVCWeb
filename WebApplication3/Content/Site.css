@@ -3,10 +3,9 @@
 }
 
 .product-wrap {
-    width: 830px;
+    width: 800px;
     flex-wrap: wrap;
     margin: auto;
-    justify-content: space-between;
     margin-top: 20px;
 }
 
@@ -43,5 +42,5 @@ textarea {
 .product-info {
     width: 40%;
     margin-left: auto;
-    padding: 10px;
+    padding: 30px 10px;
 }
