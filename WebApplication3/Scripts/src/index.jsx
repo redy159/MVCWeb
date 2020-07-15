@@ -46,17 +46,7 @@ class App extends React.Component {
 
     render() {
         if (!this.state.newProduct) return null;
-        console.log(this.state.newProduct ? this.state.newProduct : "000");
         const { newProduct } = this.state;
-        let receipt = [];
-        for (let i=0; i<10; i++)
-        {
-            receipt.push({
-                repCus: Math.random().toString(36).substring(7),
-                repTotal: "242000",
-                repStatus: "Done",
-            })
-        }
         return (
             <React.Fragment>
                 {/* test react-responsive-carousel */}
@@ -81,79 +71,7 @@ class App extends React.Component {
                     <button type="button" class="btn btn-primary mr-auto ml-auto" onClick={()=>{this.getNextPage()}}>Load more</button>
                 </div>
                 <br/><br/><br/><br/><br/>
-                <div class="container">
-                <div class="row w-full">
-                    <div class="col-3">
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link nav-pills active show" 
-                                id="v-pills-receipt-tab" 
-                                data-toggle="pill" 
-                                href="#v-pills-receipt" role="tab" 
-                                aria-controls="v-pills-receipt" 
-                                aria-selected="true">
-                                Đơn hàng
-                            </a>
-                            <a class="nav-link" 
-                                id="v-pills-product-tab" 
-                                data-toggle="pill" href="#v-pills-product" 
-                                role="tab" aria-controls="v-pills-product" 
-                                aria-selected="false">
-                                Sản phẩm
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-9">
-                        <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show" id="v-pills-receipt" role="tabpanel" aria-labelledby="v-pills-receipt-tab">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {receipt.map((rep, i)=>(
-                                        <tr>
-                                            <th scope="row">{i+1}</th>
-                                            <td>{rep.repCus}</td>
-                                            <td>{rep.repTotal}</td>
-                                            <td>{rep.repStatus}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-product-tab">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {receipt.map((rep, i)=>(
-                                        <tr>
-                                            <th scope="row">{i+1}</th>
-                                            <td>{rep.repCus}</td>
-                                            <td>{rep.repTotal}</td>
-                                            <td>{rep.repStatus}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-
-                </div>
+           
             </React.Fragment>
         );
     }
