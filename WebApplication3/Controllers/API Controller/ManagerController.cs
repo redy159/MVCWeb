@@ -19,6 +19,91 @@ namespace WebApplication3.Controllers.API_Controller
             _db.Configuration.LazyLoadingEnabled = false;
         }
 
+        [HttpPost]
+        public async Task<int> AddSport(Sport request)
+        {
+            var sport = new Sport()
+            {
+               Id = request.Id,
+               Name = request.Name,
+               Categories = request.Categories,
+            };
+            _db.Sports.Add(sport);
+            await _db.SaveChangesAsync();
+            return sport.Id;
+        }
+
+        [HttpPost]
+        public async Task<int> DeleteSport(int sportId)
+        {
+            var sport = await _db.Sports.FindAsync(sportId);
+            if (sport == null)
+                return 0;
+            _db.Sports.Remove(sport);
+            return await _db.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        public async Task<int> UpdateSport(Sport request)
+        {
+            int id = request.Id;
+            var sport= await _db.Sports.FindAsync(id);
+            if (sport == null)
+                return 0;
+
+            if (!string.IsNullOrEmpty(request.Name))
+                sport.Name = request.Name;
+
+
+            if (request.Id != 0)
+                sport.Id = request.Id;
+
+            return await _db.SaveChangesAsync();
+        }
+
+
+        [HttpPost]
+        public async Task<int> AddCategory(Category request)
+        {
+            var category = new Category()
+            {
+                Id = request.Id,
+                Name = request.Name,
+                SportId = request.SportId,
+            };
+            _db.Categories.Add(category);
+            await _db.SaveChangesAsync();
+            return category.Id;
+        }
+
+        [HttpPost]
+        public async Task<int> DeleteCategory(int CategoryId)
+        {
+            var category = await _db.Categories.FindAsync(CategoryId);
+            if (category == null)
+                return 0;
+            _db.Categories.Remove(category);
+            return await _db.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        public async Task<int> UpdateCategory(Category request)
+        {
+            int id = request.Id;
+            var category = await _db.Categories.FindAsync(id);
+            if (category == null)
+                return 0;
+
+            if (!string.IsNullOrEmpty(request.Name))
+                category.Name = request.Name;
+
+
+            if (request.SportId!= 0)
+                category.SportId = request.SportId;
+
+            return await _db.SaveChangesAsync();
+        }
+
         [HttpGet]
         public async Task<List<Sport>> GetSportMenu()
         {
@@ -255,5 +340,7 @@ namespace WebApplication3.Controllers.API_Controller
             });
             return Items;
         }
+
+
     }
 }
