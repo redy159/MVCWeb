@@ -8,6 +8,7 @@ module.exports = {
       productByCategory: "./Scripts/src/ProductByCategory.jsx",
       footer: "./Scripts/src/Component/Footer.jsx",
       dashboard: "./Scripts/src/Dashboard.jsx",
+      cart: "./Scripts/src/Cart.jsx"
   },
   output: {
     path: path.resolve(__dirname, "../dist"),
