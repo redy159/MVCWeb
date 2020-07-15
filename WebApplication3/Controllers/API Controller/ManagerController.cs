@@ -142,6 +142,21 @@ namespace WebApplication3.Controllers.API_Controller
                 CategoryId = 2,
                 BrandId = 1,
                 Price = 2000,
+                Brand = new Brand()
+                {
+                    Id = 2,
+                    Name = "Bra ",
+                },
+                Category = new Category()
+                {
+                    Id = 1,
+                    Name = "Cate ",
+                    Sport = new Sport()
+                    {
+                        Id = 3,
+                        Name = "Bóng chuyền ",
+                    }
+                }
             };
             return data;
         }
