@@ -163,6 +163,7 @@
     <Compile Include="ImageFile.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Ack.cs" />
     <Compile Include="Models\Helper\CastHelper.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductSearchModel.cs" />

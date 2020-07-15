@@ -21,7 +21,7 @@ namespace WebApplication3
         public int Rating { get; set; }
         public int Id { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

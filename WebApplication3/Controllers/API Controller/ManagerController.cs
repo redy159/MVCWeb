@@ -116,31 +116,31 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Product>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
-            //data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport)
-            //              orderby p.Id descending
-            //              select p).Skip(pageNumber*8).Take(8).ToListAsync();
+            data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x=>x.ImageFile)
+                          orderby p.Id descending
+                          select p).Skip(pageNumber * 8).Take(8).ToListAsync();
 
-            for (int i = 0; i < 8; i++)
-            {
-                data.Add(new Product()
-                {
-                    Id = i + pageNumber + 1,
-                    Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
-                    Brand = new Brand()
-                    {
-                        Id = 1,
-                        Name = "Sony",
-                    },
-                    Price = 20000,
-                    BrandId = 1,
-                    CategoryId = 1,
-                });
-            }
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    data.Add(new Product()
+            //    {
+            //        Id = i + pageNumber + 1,
+            //        Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
+            //        Brand = new Brand()
+            //        {
+            //            Id = 1,
+            //            Name = "Sony",
+            //        },
+            //        Price = 20000,
+            //        BrandId = 1,
+            //        CategoryId = 1,
+            //    });
+            //}
             return data;
         }
 
         [HttpGet]
-        public async Task<List<Product>> GetAll()
+        public async Task<List<Product>> GetAllProduct()
         {
             List<Product> data = new List<Product>();
             data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
@@ -149,34 +149,53 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
+        public async Task<List<User>> GetAllUser()
+        {
+            List<User> data = new List<User>();
+            data = await (from u in _db.Users
+                          select u).ToListAsync();
+            return data;
+        }
+
+        [HttpGet]
+        public async Task<List<Receipt>> GetAllReceipt()
+        {
+            List<Receipt> data = new List<Receipt>();
+            data = await (from r in _db.Receipts
+                          .Include(x => x.Receipt_Product.Select(y => y.Product))
+                          select r).ToListAsync();
+            return data;
+        }
+
+        [HttpGet]
         public async Task<Product> GetProductById(int id)
         {
-            //Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
-            //                      where p.Id == id
-            //                      select p).FirstOrDefaultAsync();
-            Product data = new Product()
-            {
-                Id = id,
-                Name = "Bóng Michael Jordan " + id,
-                CategoryId = 2,
-                BrandId = 1,
-                Price = 2000,
-                Brand = new Brand()
-                {
-                    Id = 2,
-                    Name = "Bra ",
-                },
-                Category = new Category()
-                {
-                    Id = 1,
-                    Name = "Cate ",
-                    Sport = new Sport()
-                    {
-                        Id = 3,
-                        Name = "Bóng chuyền ",
-                    }
-                }
-            };
+            Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
+                                  where p.Id == id
+                                  select p).FirstOrDefaultAsync();
+            //Product data = new Product()
+            //{
+            //    Id = id,
+            //    Name = "Bóng Michael Jordan " + id,
+            //    CategoryId = 2,
+            //    BrandId = 1,
+            //    Price = 2000,
+            //    Brand = new Brand()
+            //    {
+            //        Id = 2,
+            //        Name = "Bra ",
+            //    },
+            //    Category = new Category()
+            //    {
+            //        Id = 1,
+            //        Name = "Cate ",
+            //        Sport = new Sport()
+            //        {
+            //            Id = 3,
+            //            Name = "Bóng chuyền ",
+            //        }
+            //    }
+            //};
             return data;
         }
 
@@ -204,8 +223,8 @@ namespace WebApplication3.Controllers.API_Controller
                     BrandId = i % 3,
                     Brand = new Brand()
                     {
-                        Id = i%3,
-                        Name = "Bra "+(i%3),
+                        Id = i % 3,
+                        Name = "Bra " + (i % 3),
                     },
                     CategoryId = i % 4,
                     Category = new Category()
@@ -233,14 +252,14 @@ namespace WebApplication3.Controllers.API_Controller
 
             List<ProductModel> res = new List<ProductModel>();
 
-            for (int i=0;i< data.Count;i++)
+            for (int i = 0; i < data.Count; i++)
             {
-                res.Add(data[i].Cast()); 
+                res.Add(data[i].Cast());
             }
             return res;
         }
 
-        private Ack ProductValidation(Product data)
+        private Ack ProductValidation(ProductModel data)
         {
             Ack ack = new Ack();
             ack.IsSuccess = true;
@@ -259,17 +278,37 @@ namespace WebApplication3.Controllers.API_Controller
                 ack.IsSuccess = false;
                 ack.Message.Add("Name can't be empty");
             }
-
+            if (String.IsNullOrEmpty(data.ImageUrl) || String.IsNullOrWhiteSpace(data.ImageUrl))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("No image");
+            }
             return ack;
         }
 
         [HttpPost]
-        public async Task<Ack> AddProduct(Product data)
+        public async Task<Ack> AddProduct(ProductModel data)
         {
             Ack ack = ProductValidation(data);
+
             if (ack.IsSuccess)
             {
-                Product tmp = data;
+                ImageFile img = new ImageFile()
+                {
+                    ImageUrl = data.ImageUrl
+                };
+
+                _db.ImageFiles.Add(img);
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+
+                }
+                Product tmp = data.Cast();
+                tmp.ImageId = img.Id;
                 _db.Products.Add(tmp);
                 try
                 {
@@ -315,15 +354,15 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public async Task<Ack> EditProduct(Product data)
+        public async Task<Ack> EditProduct(ProductModel data)
         {
             Ack ack = ProductValidation(data);
 
             if (ack.IsSuccess)
             {
                 Product old = await (from p in _db.Products
-                             where p.Id == data.Id
-                             select p).FirstOrDefaultAsync();
+                                     where p.Id == data.Id
+                                     select p).FirstOrDefaultAsync();
                 old.Name = data.Name;
                 old.ImageId = data.ImageId;
                 old.Price = data.Price;
@@ -334,13 +373,13 @@ namespace WebApplication3.Controllers.API_Controller
                 {
                     await _db.SaveChangesAsync();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     ack.IsSuccess = false;
                     ack.Message.Add(e.Message);
                 }
             }
-            return ack; 
+            return ack;
         }
 
         [HttpPost]
@@ -356,7 +395,6 @@ namespace WebApplication3.Controllers.API_Controller
             }
             catch (Exception e)
             {
-
             }
         }
 

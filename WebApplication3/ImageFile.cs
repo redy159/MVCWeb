@@ -21,8 +21,7 @@ namespace WebApplication3
         }
     
         public int Id { get; set; }
-        public byte[] Image { get; set; }
-        public string ImageURL { get; set; }
+        public string ImageUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
