@@ -333,27 +333,33 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<PagingList<ProductModel>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
-            //var query =  (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x => x.ImageFile)
-            //              orderby p.Id descending
-            //              select p).AsQueryable();
-            //int productCount = query.Count();
-            //data = await query.Skip(pageNumber * 8).Take(8).ToListAsync();
-            for (int i = 0; i < 8; i++)
-            {
-                data.Add(new Product()
-                {
-                    Id = i + pageNumber + 1,
-                    Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
-                    Brand = new Brand()
-                    {
-                        Id = 1,
-                        Name = "Sony",
-                    },
-                    Price = 20000,
-                    BrandId = 1,
-                    CategoryId = 1,
-                });
-            }
+            var query = (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x => x.ImageFile)
+                         orderby p.Id descending
+                         select p).AsQueryable();
+            int productCount = query.Count();
+            data = await query.Skip(pageNumber * 8).Take(8).ToListAsync();
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    data.Add(new Product()
+            //    {
+            //        Id = i + pageNumber + 1,
+            //        Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
+            //        Brand = new Brand()
+            //        {
+            //            Id = 1,
+            //            Name = "Sony",
+            //        },
+            //        Price = 20000,
+            //        BrandId = 1,
+            //        CategoryId = 1,
+            //        ImageId=1,
+            //        ImageFile = new ImageFile()
+            //        {
+            //            Id =1,
+            //            ImageUrl =""
+            //        }
+            //    });
+            //}
             List<ProductModel> tmp = new List<ProductModel>();
             for (int i = 0; i < data.Count; i++)
             {
@@ -363,8 +369,7 @@ namespace WebApplication3.Controllers.API_Controller
             PagingList<ProductModel> res = new PagingList<ProductModel>()
             {
                 Data = tmp,
-                //MaxNumber = productCount,
-                MaxNumber = 100,
+                MaxNumber = productCount,
             };
 
             return res;
@@ -380,7 +385,7 @@ namespace WebApplication3.Controllers.API_Controller
             {
                 data.Add(new Product()
                 {
-                    Id = i ,
+                    Id = i,
                     Name = "Bóng Michael Jordan " + (i + 1),
                     Brand = new Brand()
                     {
@@ -390,6 +395,18 @@ namespace WebApplication3.Controllers.API_Controller
                     Price = 20000,
                     BrandId = 1,
                     CategoryId = 1,
+                    Category = new Category()
+                    {
+                        Id = 1,
+                        Name ="Basketball ball",
+                        Sport = new Sport() { Id = 1, Name = "Basketball"},
+                        SportId = 1,
+                    },
+                    ImageFile = new ImageFile()
+                    {
+                        Id = 1,
+                        ImageUrl = null
+                    }
                 });
             }
             return data;
