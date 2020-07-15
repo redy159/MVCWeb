@@ -78,14 +78,42 @@ class Dashboard extends React.Component {
                                     href="#v-pills-receipt" role="tab"
                                     aria-controls="v-pills-receipt"
                                     aria-selected="true">
-                                    Đơn hàng
+                                    Receipt
                                 </a>
                                 <a class="nav-link"
                                     id="v-pills-product-tab"
                                     data-toggle="pill" href="#v-pills-product"
                                     role="tab" aria-controls="v-pills-product"
                                     aria-selected="false">
-                                    Sản phẩm
+                                    Products
+                                </a>
+                                <a class="nav-link"
+                                    id="v-pills-customer-tab"
+                                    data-toggle="pill" href="#v-pills-customer"
+                                    role="tab" aria-controls="v-pills-customer"
+                                    aria-selected="false">
+                                    Customer
+                                </a>
+                                <a class="nav-link"
+                                    id="v-pills-cate-tab"
+                                    data-toggle="pill" href="#v-pills-cate"
+                                    role="tab" aria-controls="v-pills-cate"
+                                    aria-selected="false">
+                                    Category
+                                </a>
+                                <a class="nav-link"
+                                    id="v-pills-sport-tab"
+                                    data-toggle="pill" href="#v-pills-sport"
+                                    role="tab" aria-controls="v-pills-sport"
+                                    aria-selected="false">
+                                    Sport
+                                </a>
+                                <a class="nav-link"
+                                    id="v-pills-brand-tab"
+                                    data-toggle="pill" href="#v-pills-brand"
+                                    role="tab" aria-controls="v-pills-brand"
+                                    aria-selected="false">
+                                    Brand
                                 </a>
                             </div>
                         </div>
@@ -114,7 +142,6 @@ class Dashboard extends React.Component {
                                     </table>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-product-tab">
-
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -171,7 +198,94 @@ class Dashboard extends React.Component {
                                     </div>
                                     <button onClick={()=>this.addProduct()} class="btn btn-primary">Submit</button>
                                 </div>
-
+                                <div class="tab-pane fade" id="v-pills-customer" role="tabpanel" aria-labelledby="v-pills-customer-tab">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Customer</th>
+                                                <th scope="col">Total</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {receipt.map((rep, i) => (
+                                                <tr>
+                                                    <th scope="row">{i + 1}</th>
+                                                    <td>{rep.repCus}</td>
+                                                    <td>{rep.repTotal}</td>
+                                                    <td>{rep.repStatus}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-cate" role="tabpanel" aria-labelledby="v-pills-cate-tab">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Customer</th>
+                                                <th scope="col">Total</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {receipt.map((rep, i) => (
+                                                <tr>
+                                                    <th scope="row">{i + 1}</th>
+                                                    <td>{rep.repCus}</td>
+                                                    <td>{rep.repTotal}</td>
+                                                    <td>{rep.repStatus}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-sport" role="tabpanel" aria-labelledby="v-pills-sport-tab">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Customer</th>
+                                                <th scope="col">Total</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {receipt.map((rep, i) => (
+                                                <tr>
+                                                    <th scope="row">{i + 1}</th>
+                                                    <td>{rep.repCus}</td>
+                                                    <td>{rep.repTotal}</td>
+                                                    <td>{rep.repStatus}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-brand" role="tabpanel" aria-labelledby="v-pills-sport-brand">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Customer</th>
+                                                <th scope="col">Total</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {receipt.map((rep, i) => (
+                                                <tr>
+                                                    <th scope="row">{i + 1}</th>
+                                                    <td>{rep.repCus}</td>
+                                                    <td>{rep.repTotal}</td>
+                                                    <td>{rep.repStatus}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
