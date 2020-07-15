@@ -24,7 +24,7 @@ class Cart extends React.Component {
                 <div class="container">
                 {this.state.cartItem? this.state.cartItem.map((item)=> (
                     <div class="d-flex flex-row cart">
-                        <img class="m-auto" src="./../../../Content/images/comming-soon.jpg"/> 
+                        <img class="m-auto" src={item.Product.ImageUrl ? item.Product.ImageUrl : "./../../../Content/images/comming-soon.jpg"}/> 
                         <div class="prod-info">
                             <h2>{item.Product.Name}</h2>
                             <p>{item.Product.BrandName}</p>

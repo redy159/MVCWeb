@@ -8,22 +8,15 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currPage:1,
+            currPage:0,
+            maxCount:0,
         }
         if (!localStorage.cart)
             localStorage.setItem("cart",JSON.stringify([]))
     }
 
     componentDidMount() {
-        fetch('/api/Manager/GetNewestProduct?pageNumber=0', {
-            method: "Get",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => response.json())
-            .then(data => this.setState({ newProduct: data }));
+        this.getNextPage();
     }
 
     getNextPage() {
@@ -37,17 +30,20 @@ class App extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                var tmp = [].concat(this.state.newProduct)
-                console.log("test1",tmp)
-                tmp = tmp.concat(data)
+                if (!this.state.newProduct) 
+                    var tmp = [];
+                else var tmp = [].concat(this.state.newProduct)
+                console.log("test1",data)
+                tmp = tmp.concat(data.Data)
                 console.log("test2", tmp)
-                this.setState({ newProduct: tmp, currPage: this.state.currPage+1 })
+                this.setState({ newProduct: tmp, currPage: this.state.currPage+1, maxCount: data.MaxCount })
             });
     }
 
 
     render() {
         if (!this.state.newProduct) return null;
+        console.log(this.state)
         const { newProduct } = this.state;
         return (
             <React.Fragment>
@@ -69,9 +65,11 @@ class App extends React.Component {
                         <Product data={item} />
                     ))}
                 </div>
+                {this.state.maxCount >= newProduct.length ?
                 <div class="d-flex flex-row">
                     <button type="button" class="btn btn-primary mr-auto ml-auto" onClick={()=>{this.getNextPage()}}>Load more</button>
-                </div>
+                </div>: null}
+
                 <br/><br/><br/><br/><br/>
            
             </React.Fragment>

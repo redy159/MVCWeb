@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="Models\Ack.cs" />
     <Compile Include="Models\Helper\CastHelper.cs" />
+    <Compile Include="Models\PagingList.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductSearchModel.cs" />
     <Compile Include="Models\ShopItem.cs" />

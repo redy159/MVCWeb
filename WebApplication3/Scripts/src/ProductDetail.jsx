@@ -53,7 +53,7 @@ class ProductDetail extends React.Component {
                 </nav>
                 <div class="flex flex-row">
                     <div class="product-img">
-                        <img src={data.ImageUrl}/> 
+                        <img src={data.ImageUrl ? data.ImageUrl : "./../../../Content/images/comming-soon.jpg"}/> 
                     </div>
                     <div class="product-info flex flex-column">
                         <h1>{data.Name}</h1><br/><br/>
