@@ -9,5 +9,7 @@ namespace WebApplication3.Models
     {
         public string BrandName { get; set; }
         public string CategoryName { get; set; }
+        public string SportName { get; set; }
+        public int SportId { get; set; }
     }
 }

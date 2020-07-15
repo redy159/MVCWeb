@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApplication3.Models;
+using WebApplication3.Models.Helper;
 
 namespace WebApplication3.Controllers.API_Controller
 {
@@ -96,7 +97,7 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Product>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
-            //data = await (from p in _db.Products
+            //data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport)
             //              orderby p.Id descending
             //              select p).Skip(pageNumber*8).Take(8).ToListAsync();
 
@@ -104,8 +105,8 @@ namespace WebApplication3.Controllers.API_Controller
             {
                 data.Add(new Product()
                 {
-                    Id = i + 1,
-                    Name = "Bóng Michael Jordan " + (i + 1),
+                    Id = i + pageNumber + 1,
+                    Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
                     Brand = new Brand()
                     {
                         Id = 1,
@@ -123,7 +124,7 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Product>> GetAll()
         {
             List<Product> data = new List<Product>();
-            data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category)
+            data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
                           select p).ToListAsync();
             return data;
         }
@@ -131,7 +132,7 @@ namespace WebApplication3.Controllers.API_Controller
         [HttpGet]
         public async Task<Product> GetProductById(int id)
         {
-            //Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category)
+            //Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
             //                      where p.Id == id
             //                      select p).FirstOrDefaultAsync();
             Product data = new Product()
@@ -146,7 +147,7 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public async Task<List<Product>> GetProductFilter(ProductSearchModel model)
+        public async Task<List<ProductModel>> GetProductFilter(ProductSearchModel model)
         {
             List<Product> data = new List<Product>();
             //var query = _db.Products.Select(x => x).Include(x=> x.Category.Sport).Include(x => x.Brand).AsQueryable();
@@ -167,6 +168,11 @@ namespace WebApplication3.Controllers.API_Controller
                     Name = "Test " + i,
                     Price = 2000,
                     BrandId = i % 3,
+                    Brand = new Brand()
+                    {
+                        Id = i%3,
+                        Name = "Bra "+(i%3),
+                    },
                     CategoryId = i % 4,
                     Category = new Category()
                     {
@@ -191,7 +197,13 @@ namespace WebApplication3.Controllers.API_Controller
             if (model.BrandId > 0)
                 data = data.Where(x => x.BrandId == model.BrandId).ToList();
 
-            return data;
+            List<ProductModel> res = new List<ProductModel>();
+
+            for (int i=0;i< data.Count;i++)
+            {
+                res.Add(data[i].Cast()); 
+            }
+            return res;
         }
 
         private bool ProductValidation(Product data)

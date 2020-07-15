@@ -154,6 +154,7 @@
     <Compile Include="Category.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\API Controller\ManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,6 +163,7 @@
     <Compile Include="ImageFile.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Helper\CastHelper.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductSearchModel.cs" />
     <Compile Include="Models\ShopItem.cs" />
@@ -226,6 +228,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\src\Dashboard.jsx" />
     <Content Include="Scripts\src\index.jsx" />
     <Content Include="Scripts\src\Component\test.jsx" />
     <Content Include="ShopWeb.Context.tt">
@@ -261,6 +264,8 @@
     <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\Home\ProductDetail.cshtml" />
     <Content Include="Views\Home\ProductByCategory.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

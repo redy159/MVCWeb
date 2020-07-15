@@ -10,7 +10,7 @@ class Footer extends React.Component {
     render() {
         const { login, sign } = this.state;
        
-        if (!this.state.data) return null;
+        //if (!this.state.data) return null;
         return (
             <React.Fragment>
                 <div class="footer">
@@ -22,4 +22,4 @@ class Footer extends React.Component {
     }
 }
 
-ReactDOM.render(<Header />, document.getElementById("header"));
+ReactDOM.render(<Footer />, document.getElementById("footer"));
