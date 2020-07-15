@@ -188,7 +188,7 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
-        public async Task<Product> GetProductById(int id)
+        public async Task<ProductModel> GetProductById(int id)
         {
             Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport).Include(x => x.ImageFile)
                                   where p.Id == id
