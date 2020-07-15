@@ -166,7 +166,10 @@ namespace WebApplication3.Controllers.API_Controller
             Ack ack = new Ack() { IsSuccess = true };
             var category = await _db.Categories.FindAsync(CategoryId);
             if (category == null)
-                return 0;
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Category not found");
+            }
             _db.Categories.Remove(category);
             try
             {
