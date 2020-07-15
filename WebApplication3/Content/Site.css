@@ -57,6 +57,9 @@ textarea {
     color: #fff;
     font-weight: 800;
 }
+.footer p {
+    margin: 0;
+}
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fff;
     background-color: #586ab8;
@@ -131,5 +134,28 @@ textarea {
 .add-new .form-group button{
     width: 30%;
     padding: 10px;
+    margin: auto;
+}
+.cart {
+    padding: 15px;
+    border-radius: 10px;
+}
+.cart img {
+    width: 80px;
+    padding: 10px;
+}
+.cart .prod-info {
+    width: 470px;
+    padding: 10px;
+}
+.cart .prod-price {
+    width: 70px;
+    margin: auto;
+}
+.cart .prod-price-total {
+    width: 150px;
+    margin: auto;
+}
+.m-auto {
     margin: auto;
 }
