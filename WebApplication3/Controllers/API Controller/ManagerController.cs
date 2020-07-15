@@ -94,6 +94,25 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
+        public async Task<List<Category>> GetCategoryMenu()
+        {
+            List<Category> data = new List<Category>();
+
+            data = await (from c in _db.Categories.Include(x => x.Sport)
+                          select c).ToListAsync();
+            return data;
+        }
+
+        [HttpGet]
+        public async Task<List<Brand>> GetBrandMenu()
+        {
+            List<Brand> data = new List<Brand>();
+            data = await (from b in _db.Brands
+                          select b).ToListAsync();
+            return data;
+        }
+
+        [HttpGet]
         public async Task<List<Product>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
@@ -221,17 +240,34 @@ namespace WebApplication3.Controllers.API_Controller
             return res;
         }
 
-        private bool ProductValidation(Product data)
+        private Ack ProductValidation(Product data)
         {
-            if (data.BrandId == 0 || data.CategoryId == 0) return false;
-            if (String.IsNullOrEmpty(data.Name) || String.IsNullOrWhiteSpace(data.Name)) return false;
-            return true;
+            Ack ack = new Ack();
+            ack.IsSuccess = true;
+            if (data.BrandId == 0)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Brand missing");
+            }
+            if (data.CategoryId == 0)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Category missing");
+            }
+            if (String.IsNullOrEmpty(data.Name) || String.IsNullOrWhiteSpace(data.Name))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Name can't be empty");
+            }
+
+            return ack;
         }
 
         [HttpPost]
-        public async Task AddProduct(Product data)
+        public async Task<Ack> AddProduct(Product data)
         {
-            if (ProductValidation(data))
+            Ack ack = ProductValidation(data);
+            if (ack.IsSuccess)
             {
                 Product tmp = data;
                 _db.Products.Add(tmp);
@@ -241,10 +277,70 @@ namespace WebApplication3.Controllers.API_Controller
                 }
                 catch (Exception e)
                 {
-
+                    ack.IsSuccess = false;
+                    ack.Error.Add(e.Message);
                 }
             }
-            return;
+            return ack;
+        }
+
+        private Ack UserValidate(User data)
+        {
+            Ack ack = new Ack();
+            ack.IsSuccess = true;
+            if (!String.IsNullOrEmpty(data.Name) && !String.IsNullOrWhiteSpace(data.Name))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Name can't be null or empty");
+            }
+            if (!String.IsNullOrEmpty(data.Email) && !String.IsNullOrWhiteSpace(data.Name))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Password can't be null or empty");
+            }
+            if (data.UserType == 0)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("UserType not selected");
+            }
+
+            return ack;
+        }
+
+        [HttpPost]
+        public async Task<Ack> AddUser(User data)
+        {
+            Ack ack = UserValidate(data);
+            return ack;
+        }
+
+        [HttpPost]
+        public async Task<Ack> EditProduct(Product data)
+        {
+            Ack ack = ProductValidation(data);
+
+            if (ack.IsSuccess)
+            {
+                Product old = await (from p in _db.Products
+                             where p.Id == data.Id
+                             select p).FirstOrDefaultAsync();
+                old.Name = data.Name;
+                old.ImageId = data.ImageId;
+                old.Price = data.Price;
+                old.CategoryId = data.CategoryId;
+                old.BrandId = data.CategoryId;
+
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch(Exception e)
+                {
+                    ack.IsSuccess = false;
+                    ack.Message.Add(e.Message);
+                }
+            }
+            return ack; 
         }
 
         [HttpPost]
