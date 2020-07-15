@@ -20,6 +20,7 @@ namespace WebApplication3.Models.Helper
                 Price = obj.Price,
                 SportId = obj.Category.SportId,
                 SportName = obj.Category.Sport.Name,
+                ImageUrl = obj.ImageFile.ImageUrl,
             };
             return data;
         }

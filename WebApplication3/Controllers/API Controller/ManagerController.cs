@@ -100,6 +100,16 @@ namespace WebApplication3.Controllers.API_Controller
 
             data = await (from c in _db.Categories.Include(x => x.Sport)
                           select c).ToListAsync();
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    data.Add(new Category()
+            //    {
+            //        Id = i + 1,
+            //        Name = "Cate " + i,
+            //        SportId = i+1,
+            //    }
+            //    );
+            //}
             return data;
         }
 
@@ -109,6 +119,16 @@ namespace WebApplication3.Controllers.API_Controller
             List<Brand> data = new List<Brand>();
             data = await (from b in _db.Brands
                           select b).ToListAsync();
+
+            //for (int i = 0;i<5;i++)
+            //{
+            //    data.Add(new Brand()
+            //    {
+            //        Id = i + 1,
+            //        Name = "Bra "+i
+            //    }
+            //    );
+            //}
             return data;
         }
 
@@ -170,7 +190,7 @@ namespace WebApplication3.Controllers.API_Controller
         [HttpGet]
         public async Task<Product> GetProductById(int id)
         {
-            Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
+            Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport).Include(x => x.ImageFile)
                                   where p.Id == id
                                   select p).FirstOrDefaultAsync();
             //Product data = new Product()
@@ -196,7 +216,10 @@ namespace WebApplication3.Controllers.API_Controller
             //        }
             //    }
             //};
-            return data;
+
+            ProductModel tmp = data.Cast();
+
+            return tmp;
         }
 
         [HttpPost]
