@@ -8,7 +8,7 @@ class ProductByCategory extends React.Component {
         this.state = {
             searchModel: {
                 CateId: 1,
-                BrandId: 2,
+                BrandId: 1,
             }
         }
     }
@@ -35,7 +35,7 @@ class ProductByCategory extends React.Component {
                 <nav aria-label="breadcrumb" style={{ backgroundColor: "#fff!important"}}>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">{data.Category? data.Category : "Cate"}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{data.CategoryName? data.CategoryName : "Cate"}</a></li>
                     </ol>
                 </nav>
                 <div className="flex product-wrap">

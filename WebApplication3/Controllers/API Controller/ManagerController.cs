@@ -133,7 +133,7 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
-        public async Task<List<Product>> GetNewestProduct(int pageNumber)
+        public async Task<List<ProductModel>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
             data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x=>x.ImageFile)
@@ -156,7 +156,13 @@ namespace WebApplication3.Controllers.API_Controller
             //        CategoryId = 1,
             //    });
             //}
-            return data;
+            List<ProductModel> tmp = new List<ProductModel>();
+            for (int i= 0; i< data.Count;i++)
+            {
+                tmp.Add(data[i].Cast());
+            }
+
+            return tmp;
         }
 
         [HttpGet]
@@ -226,43 +232,43 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<ProductModel>> GetProductFilter(ProductSearchModel model)
         {
             List<Product> data = new List<Product>();
-            //var query = _db.Products.Select(x => x).Include(x=> x.Category.Sport).Include(x => x.Brand).AsQueryable();
-            //if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
-            //    query = query.Where(x => x.Name.Contains(model.Name)).AsQueryable();
-            //if (model.SportId > 0)
-            //    query = query.Where(x => x.Category.SportId == model.SportId).AsQueryable();
-            //if (model.CateId > 0)
-            //    query = query.Where(x => x.CategoryId == model.CateId).AsQueryable();
-            //if (model.BrandId > 0)
-            //    query = query.Where(x => x.BrandId == model.BrandId).AsQueryable();
-            //data = await query.ToListAsync();
-            for (int i = 1; i < 20; i++)
-            {
-                data.Add(new Product
-                {
-                    Id = i,
-                    Name = "Test " + i,
-                    Price = 2000,
-                    BrandId = i % 3,
-                    Brand = new Brand()
-                    {
-                        Id = i % 3,
-                        Name = "Bra " + (i % 3),
-                    },
-                    CategoryId = i % 4,
-                    Category = new Category()
-                    {
-                        Id = i % 4,
-                        Name = "Cate " + (i % 4),
-                        Sport = new Sport()
-                        {
-                            Id = i % 3,
-                            Name = "Bóng chuyền " + (i % 3),
-                        }
-                    }
-                });
+            var query = _db.Products.Select(x => x).Include(x => x.ImageFile).Include(x => x.Category.Sport).Include(x => x.Brand).AsQueryable();
+            if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
+                query = query.Where(x => x.Name.Contains(model.Name)).AsQueryable();
+            if (model.SportId > 0)
+                query = query.Where(x => x.Category.SportId == model.SportId).AsQueryable();
+            if (model.CateId > 0)
+                query = query.Where(x => x.CategoryId == model.CateId).AsQueryable();
+            if (model.BrandId > 0)
+                query = query.Where(x => x.BrandId == model.BrandId).AsQueryable();
+            data = await query.ToListAsync();
+            //for (int i = 1; i < 20; i++)
+            //{
+            //    data.Add(new Product
+            //    {
+            //        Id = i,
+            //        Name = "Test " + i,
+            //        Price = 2000,
+            //        BrandId = i % 3,
+            //        Brand = new Brand()
+            //        {
+            //            Id = i % 3,
+            //            Name = "Bra " + (i % 3),
+            //        },
+            //        CategoryId = i % 4,
+            //        Category = new Category()
+            //        {
+            //            Id = i % 4,
+            //            Name = "Cate " + (i % 4),
+            //            Sport = new Sport()
+            //            {
+            //                Id = i % 3,
+            //                Name = "Bóng chuyền " + (i % 3),
+            //            }
+            //        }
+            //    });
 
-            }
+            //}
 
             if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
                 data = data.Where(x => x.Name.Contains(model.Name)).ToList();
