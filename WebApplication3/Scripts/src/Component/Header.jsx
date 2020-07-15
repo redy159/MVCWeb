@@ -42,7 +42,17 @@ class Header extends React.Component {
     onCloseModalclose (){
         this.setState({ login: false });
     };
-   
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
+    handleSubmit() {
+        console.log("Submitting");
+        console.log(this.state);
+    };
 
     render() {
         const { login, sign } = this.state;
@@ -111,12 +121,12 @@ class Header extends React.Component {
                         <span className="subtitle">Just fill in the form below</span>
                         <form className="form-signin" novalidate="novalidate">
                             <div className="form-group">
-                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" />
+                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" onChange={this.handleChange}  />
                             </div>
                             <div className="form-group">
-                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" />
+                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" onChange={this.handleChange}  />
                             </div>
-                            <input className="btn btn-light log-in" type="button" value="Login" />
+                            <input className="btn btn-light log-in" type="button" value="Login" onClick={this.handleSubmit} />
                         </form>
                     </div>
                 </Modal>
