@@ -86,6 +86,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" />
           <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Category_Sport">
           <End Role="Sport" Type="Self.Sport" Multiplicity="1" />
@@ -100,9 +101,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Brand">
-          <End Role="Brand" Type="Self.Brand" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Brand">
@@ -114,9 +113,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
@@ -128,9 +125,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_ImageFile">
-          <End Role="ImageFile" Type="Self.ImageFile" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="ImageFile" Type="Self.ImageFile" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImageFile">
@@ -142,9 +137,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductReview_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="ProductReview" Type="Self.ProductReview" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -156,9 +149,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductReview_User">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="ProductReview" Type="Self.ProductReview" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -170,9 +161,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_Product_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -184,9 +173,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_Product_Receipt">
-          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
           <End Role="Receipt_Product" Type="Self.Receipt_Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Receipt">
@@ -198,9 +185,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipt_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -384,6 +369,7 @@
           <Property Name="UserType" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ProductReviews" Relationship="ShoppingWebModel.FK_ProductReview_User" FromRole="User" ToRole="ProductReview" />
           <NavigationProperty Name="Receipts" Relationship="ShoppingWebModel.FK_Receipt_User" FromRole="User" ToRole="Receipt" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_ProductReview_User">
           <End Type="ShoppingWebModel.User" Role="User" Multiplicity="1" />
@@ -595,6 +581,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ShoppingWebModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
