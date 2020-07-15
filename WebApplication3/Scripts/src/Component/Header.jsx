@@ -10,7 +10,8 @@ class Header extends React.Component {
         this.state = {
             sign: false,
             login: false,
-        }     
+           
+        };  
     }
 
 
@@ -42,7 +43,18 @@ class Header extends React.Component {
     onCloseModalclose (){
         this.setState({ login: false });
     };
-   
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    
+    };  
+
+    handleSubmit() {
+        console.log("Submitting");
+        console.log(this.state);
+    };
 
     render() {
         const { login, sign } = this.state;
@@ -88,15 +100,15 @@ class Header extends React.Component {
                         <h2>Sign up<span> Free!</span></h2>
                         <form className="form-signin" novalidate="novalidate">
                         <div className="form-group">
-                            <input className="form-control" type="text" name="name" id="name" placeholder="First Name" required="" autocomplete="off" aria-required="true" />
+                                <input className="form-control" type="text" name="name" id="name" placeholder="First Name" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }} />
                         </div>
                         <div className="form-group">
-                            <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" />
+                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }} />
                         </div>
                         <div className="form-group">
-                            <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" />
+                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }} />
                         </div>
-                        <input className="btn btn-light sign-up" type="button" value="Sign Up" />
+                        <input className="btn btn-light sign-up" type="button" value="Sign Up" onClick={() => this.handleSubmit()} />
                         </form>
                     </div>
                 </Modal>
@@ -111,12 +123,12 @@ class Header extends React.Component {
                         <span className="subtitle">Just fill in the form below</span>
                         <form className="form-signin" novalidate="novalidate">
                             <div className="form-group">
-                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" />
+                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }}  />
                             </div>
                             <div className="form-group">
-                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" />
+                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }}  />
                             </div>
-                            <input className="btn btn-light log-in" type="button" value="Login" />
+                            <input className="btn btn-light log-in" type="button" value="Login" onClick={() => this.handleSubmit()} />
                         </form>
                     </div>
                 </Modal>
