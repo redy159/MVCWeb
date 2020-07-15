@@ -25,7 +25,6 @@ class Dashboard extends React.Component {
                 repStatus: "Done",
             })
         }
-        const maxNumber = 2;
         return (
             <React.Fragment>
                 <div class="container mt-3">
@@ -97,6 +96,7 @@ class Dashboard extends React.Component {
                                     </table>
                                     <br /><br />
                                     <form class="add-new">
+                                        <h2 class="text-center w-full">Add new product</h2>
                                         <div class="form-group">
                                             <label for="productName">Product name</label>
                                             <input type="text" class="form-control" id="productName" placeholder="Enter product name" />
@@ -105,24 +105,25 @@ class Dashboard extends React.Component {
                                             <label for="productPrice">Product price</label>
                                             <input type="number" class="form-control" id="productPrice" placeholder="Price" />
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group w-full">
                                             <ImageUploading
                                                 onChange={this.testChange}
                                                 acceptType={["jpg", "gif", "png"]}
                                             >
                                                 {({ imageList, onImageUpload, onImageRemoveAll }) => (
-                                                    // write your building UI
                                                     <div>
-                                                        <button onClick={onImageUpload}>Upload images</button>
-                                                        <button onClick={onImageRemoveAll}>Remove all images</button>
-
-                                                        {imageList.map((image) => (
-                                                            <div key={image.key}>
-                                                                <img src={image.dataURL} width="100"/>
-                                                                <button onClick={image.onUpdate}>Update</button>
-                                                                <button onClick={image.onRemove}>Remove</button>
+                                                        {imageList.length? imageList.map((image) => (
+                                                            <div key={image.key} class="d-flex flex-column">
+                                                                <div class="d-flex flex-row justify-content-between">
+                                                                    <button class="btn btn-primary" onClick={image.onUpdate}>Update</button>
+                                                                    <button class="btn btn-primary" onClick={image.onRemove}>Remove</button>
+                                                                </div>
+                                                                <img src={image.dataURL}/>
                                                             </div>
-                                                        ))}
+                                                        )): 
+                                                        <button class="btn btn-primary" onClick={onImageUpload}>Upload images</button>
+                                                        }
+                                                        
                                                     </div>
                                                 )}
                                             </ImageUploading>
