@@ -6,14 +6,53 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            product:{
+                Name:"",
+                ImageUrl:"",
+                BrandId:1,
+                CategoryId:1,
+            }
         }
     }
 
     componentDidMount() {
     }
 
-    testChange(e){
-        console.log(e)
+    addProduct(){
+        fetch('/api/Manager/AddProduct', {
+            method: "Post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state.product)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.isSuccess) alert("Add product successfully")
+                else alert("Failed to add product")
+            });
+    }
+
+    imageChange(e) {
+        var tmp = {}
+        $.extend(tmp,this.state.product)
+        tmp.ImageUrl = e[0].dataURL
+        this.setState({ product: tmp })
+    }
+
+    nameChange(e){
+        var tmp = {}
+        $.extend(tmp,this.state.product)
+        tmp.Name = e.target.value
+        this.setState({ product: tmp })
+    }
+
+    priceChange(e){
+        var tmp = {}
+        $.extend(tmp,this.state.product)
+        tmp.Price = e.target.value
+        this.setState({ product: tmp })
     }
 
     render() {
@@ -25,6 +64,8 @@ class Dashboard extends React.Component {
                 repStatus: "Done",
             })
         }
+        let {product} = this.state
+        console.log(this.state.product, "test")
         return (
             <React.Fragment>
                 <div class="container mt-3">
@@ -95,41 +136,40 @@ class Dashboard extends React.Component {
                                         </tbody>
                                     </table>
                                     <br /><br />
-                                    <form class="add-new">
-                                        <h2 class="text-center w-full">Add new product</h2>
-                                        <div class="form-group">
-                                            <label for="productName">Product name</label>
-                                            <input type="text" class="form-control" id="productName" placeholder="Enter product name" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="productPrice">Product price</label>
-                                            <input type="number" class="form-control" id="productPrice" placeholder="Price" />
-                                        </div>
-                                        <div class="form-group w-full">
-                                            <ImageUploading
-                                                onChange={this.testChange}
-                                                acceptType={["jpg", "gif", "png"]}
-                                            >
-                                                {({ imageList, onImageUpload, onImageRemoveAll }) => (
-                                                    <div>
-                                                        {imageList.length? imageList.map((image) => (
-                                                            <div key={image.key} class="d-flex flex-column">
-                                                                <div class="d-flex flex-row justify-content-between">
-                                                                    <button class="btn btn-primary" onClick={image.onUpdate}>Update</button>
-                                                                    <button class="btn btn-primary" onClick={image.onRemove}>Remove</button>
-                                                                </div>
-                                                                <img src={image.dataURL}/>
+                                    <h2 class="text-center w-full">Add new product</h2>
+                                    <div class="form-group">
+                                        <label for="productName">Product name</label>
+                                        <input value={product.Name} onChange={(e)=>{this.nameChange(e)}} type="text" class="form-control" id="productName" placeholder="Enter product name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productPrice">Product price</label>
+                                        <input value={product.Price} onChange={(e)=>{this.priceChange(e)}} type="number" class="form-control" id="productPrice" placeholder="Price" />
+                                    </div>
+
+                                    <div class="form-group w-full">
+                                        <ImageUploading
+                                            onChange={(e) => this.imageChange(e)}
+                                            acceptType={["jpg", "gif", "png"]}
+                                        >
+                                            {({ imageList, onImageUpload, onImageRemoveAll }) => (
+                                                <div>
+                                                    {imageList.length ? imageList.map((image) => (
+                                                        <div key={image.key} class="d-flex flex-column">
+                                                            <div class="d-flex flex-row justify-content-between">
+                                                                <button class="btn btn-primary" onClick={image.onUpdate}>Update</button>
+                                                                <button class="btn btn-primary" onClick={image.onRemove}>Remove</button>
                                                             </div>
-                                                        )): 
-                                                        <button class="btn btn-primary" onClick={onImageUpload}>Upload images</button>
-                                                        }
-                                                        
-                                                    </div>
-                                                )}
-                                            </ImageUploading>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </form>
+                                                            <img src={image.dataURL} />
+                                                        </div>
+                                                    )) :
+                                                        <button class="btn btn-primary" onClick={onImageUpload} > Upload images</button>
+                                                    }
+
+                                                </div>
+                                            )}
+                                        </ImageUploading>
+                                    </div>
+                                    <button onClick={()=>this.addProduct()} class="btn btn-primary">Submit</button>
                                 </div>
 
                             </div>

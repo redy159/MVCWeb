@@ -5,24 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2fe50e9f407f414499658fdddc630200" Name="Diagram1">
-        <EntityTypeShape EntityType="ShoppingWebModel.Brand" Width="1.5" PointX="0.75" PointY="4" />
-        <EntityTypeShape EntityType="ShoppingWebModel.Category" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ShoppingWebModel.ImageFile" Width="1.5" PointX="0.75" PointY="7.125" />
-        <EntityTypeShape EntityType="ShoppingWebModel.ProductReview" Width="1.5" PointX="5.25" PointY="3.5" />
-        <EntityTypeShape EntityType="ShoppingWebModel.Receipt" Width="1.5" PointX="6" PointY="8.625" />
-        <EntityTypeShape EntityType="ShoppingWebModel.Receipt_Product" Width="1.5" PointX="8.25" PointY="3.75" />
-        <EntityTypeShape EntityType="ShoppingWebModel.User" Width="1.5" PointX="3" PointY="8.625" />
-        <AssociationConnector Association="ShoppingWebModel.FK_ProductReview_User" />
-        <AssociationConnector Association="ShoppingWebModel.FK_Receipt_Product_Receipt" />
-        <AssociationConnector Association="ShoppingWebModel.FK_Receipt_User" />
-        <EntityTypeShape EntityType="ShoppingWebModel.Sport" Width="1.5" PointX="0.75" PointY="10" />
-        <AssociationConnector Association="ShoppingWebModel.FK_Category_Sport" />
-        <EntityTypeShape EntityType="ShoppingWebModel.Product" Width="1.5" PointX="3.375" PointY="3.25" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Brand" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Category" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="ShoppingWebModel.ImageFile" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Product" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="ShoppingWebModel.ProductReview" Width="1.5" PointX="10.5" PointY="3.5" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Receipt" Width="1.5" PointX="5.25" PointY="8.5" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Receipt_Product" Width="1.5" PointX="7.5" PointY="3.625" />
+        <EntityTypeShape EntityType="ShoppingWebModel.Sport" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="ShoppingWebModel.User" Width="1.5" PointX="8.25" PointY="8.5" />
         <AssociationConnector Association="ShoppingWebModel.FK_Product_Brand" />
+        <AssociationConnector Association="ShoppingWebModel.FK_Category_Sport" />
         <AssociationConnector Association="ShoppingWebModel.FK_Product_Category" />
         <AssociationConnector Association="ShoppingWebModel.FK_Product_ImageFile" />
         <AssociationConnector Association="ShoppingWebModel.FK_ProductReview_Product" />
         <AssociationConnector Association="ShoppingWebModel.FK_Receipt_Product_Product" />
+        <AssociationConnector Association="ShoppingWebModel.FK_ProductReview_User" />
+        <AssociationConnector Association="ShoppingWebModel.FK_Receipt_Product_Receipt" />
+        <AssociationConnector Association="ShoppingWebModel.FK_Receipt_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

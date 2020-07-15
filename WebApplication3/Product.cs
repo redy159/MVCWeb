@@ -25,7 +25,7 @@ namespace WebApplication3
         public string Name { get; set; }
         public int Price { get; set; }
         public int BrandId { get; set; }
-        public Nullable<int> ImageId { get; set; }
+        public int ImageId { get; set; }
         public int CategoryId { get; set; }
     
         public virtual Brand Brand { get; set; }
