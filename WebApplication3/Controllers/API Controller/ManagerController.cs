@@ -221,72 +221,72 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Sport>> GetSportMenu()
         {
             List<Sport> data = new List<Sport>();
-            data = await (from s in _db.Sports.Include(p => p.Categories)
-                          select s).ToListAsync();
-           // data = new List<Sport>() {
-           //     new Sport()
-           //     {
-           //         Id = 1,
-           //         Name = "Bóng đá",
-           //         Categories = new List<Category>()
-           //         {
-           //             new Category(){ Id = 1, Name = "Banh (bóng đá)"},
-           //             new Category(){ Id = 2, Name = "Găng"},
-           //         }
-           //     },
-           //     new Sport()
-           //     {
-           //         Id = 2,
-           //         Name = "Bóng rổ",
-           //         Categories = new List<Category>()
-           //         {
-           //             new Category(){ Id = 3, Name = "Banh (bóng rổ)"},
-           //             new Category(){ Id = 4, Name = "Giày"},
-           //         }
-           //     },
-           //     new Sport()
-           //     {
-           //         Id = 3,
-           //         Name = "Bóng chuyền",
-           //         Categories = new List<Category>()
-           //         {
-           //             new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
-           //             new Category(){ Id = 6, Name = "Đồng phục"},
-           //         }
-           //     },
-           //     new Sport()
-           //     {
-           //         Id = 3,
-           //         Name = "Bóng chuyền",
-           //         Categories = new List<Category>()
-           //         {
-           //             new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
-           //             new Category(){ Id = 6, Name = "Đồng phục"},
-           //         }
-           //     }
-           //     ,
-           //     new Sport()
-           //     {
-           //         Id = 4,
-           //         Name = "Bóng chuyền",
-           //         Categories = new List<Category>()
-           //         {
-           //             new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
-           //             new Category(){ Id = 6, Name = "Đồng phục"},
-           //         }
-           //     }
-           //     ,
-           //     new Sport()
-           //     {
-           //         Id = 5,
-           //         Name = "Bóng chuyền",
-           //         Categories = new List<Category>()
-           //         {
-           //             new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
-           //             new Category(){ Id = 6, Name = "Đồng phục"},
-           //         }
-           //     }
-           //};
+            //data = await (from s in _db.Sports.Include(p => p.Categories)
+            //              select s).ToListAsync();
+            data = new List<Sport>() {
+                new Sport()
+                {
+                    Id = 1,
+                    Name = "Bóng đá",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 1, Name = "Banh (bóng đá)"},
+                        new Category(){ Id = 2, Name = "Găng"},
+                    }
+                },
+                new Sport()
+                {
+                    Id = 2,
+                    Name = "Bóng rổ",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 3, Name = "Banh (bóng rổ)"},
+                        new Category(){ Id = 4, Name = "Giày"},
+                    }
+                },
+                new Sport()
+                {
+                    Id = 3,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                },
+                new Sport()
+                {
+                    Id = 3,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+                ,
+                new Sport()
+                {
+                    Id = 4,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+                ,
+                new Sport()
+                {
+                    Id = 5,
+                    Name = "Bóng chuyền",
+                    Categories = new List<Category>()
+                    {
+                        new Category(){ Id = 5, Name = "Banh (bóng chuyền)"},
+                        new Category(){ Id = 6, Name = "Đồng phục"},
+                    }
+                }
+           };
             return data;
         }
 
@@ -295,18 +295,18 @@ namespace WebApplication3.Controllers.API_Controller
         {
             List<Category> data = new List<Category>();
 
-            data = await (from c in _db.Categories.Include(x => x.Sport)
-                          select c).ToListAsync();
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    data.Add(new Category()
-            //    {
-            //        Id = i + 1,
-            //        Name = "Cate " + i,
-            //        SportId = i+1,
-            //    }
-            //    );
-            //}
+            //data = await (from c in _db.Categories.Include(x => x.Sport)
+            //              select c).ToListAsync();
+            for (int i = 0; i < 4; i++)
+            {
+                data.Add(new Category()
+                {
+                    Id = i + 1,
+                    Name = "Cate " + i,
+                    SportId = i + 1,
+                }
+                );
+            }
             return data;
         }
 
@@ -314,18 +314,18 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Brand>> GetBrandMenu()
         {
             List<Brand> data = new List<Brand>();
-            data = await (from b in _db.Brands
-                          select b).ToListAsync();
+            //data = await (from b in _db.Brands
+            //              select b).ToListAsync();
 
-            //for (int i = 0;i<5;i++)
-            //{
-            //    data.Add(new Brand()
-            //    {
-            //        Id = i + 1,
-            //        Name = "Bra "+i
-            //    }
-            //    );
-            //}
+            for (int i = 0; i < 5; i++)
+            {
+                data.Add(new Brand()
+                {
+                    Id = i + 1,
+                    Name = "Bra " + i
+                }
+                );
+            }
             return data;
         }
 
@@ -333,27 +333,33 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<PagingList<ProductModel>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
-            var query =  (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x => x.ImageFile)
-                          orderby p.Id descending
-                          select p).AsQueryable();
-            int productCount = query.Count();
-            data = await query.Skip(pageNumber * 8).Take(8).ToListAsync();
-            //for (int i = 0; i < 8; i++)
-            //{
-            //    data.Add(new Product()
-            //    {
-            //        Id = i + pageNumber + 1,
-            //        Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
-            //        Brand = new Brand()
-            //        {
-            //            Id = 1,
-            //            Name = "Sony",
-            //        },
-            //        Price = 20000,
-            //        BrandId = 1,
-            //        CategoryId = 1,
-            //    });
-            //}
+            //var query = (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x => x.ImageFile)
+            //             orderby p.Id descending
+            //             select p).AsQueryable();
+            //int productCount = query.Count();
+            //data = await query.Skip(pageNumber * 8).Take(8).ToListAsync();
+            for (int i = 0; i < 8; i++)
+            {
+                data.Add(new Product()
+                {
+                    Id = i + pageNumber + 1,
+                    Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
+                    Brand = new Brand()
+                    {
+                        Id = 1,
+                        Name = "Sony",
+                    },
+                    Price = 20000,
+                    BrandId = 1,
+                    CategoryId = 1,
+                    ImageId = 1,
+                    ImageFile = new ImageFile()
+                    {
+                        Id = 1,
+                        ImageUrl = ""
+                    }
+                });
+            }
             List<ProductModel> tmp = new List<ProductModel>();
             for (int i = 0; i < data.Count; i++)
             {
@@ -363,7 +369,8 @@ namespace WebApplication3.Controllers.API_Controller
             PagingList<ProductModel> res = new PagingList<ProductModel>()
             {
                 Data = tmp,
-                MaxNumber = productCount,
+                //MaxNumber = productCount,
+                MaxNumber = 100,
             };
 
             return res;
@@ -373,8 +380,36 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Product>> GetAllProduct()
         {
             List<Product> data = new List<Product>();
-            data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
-                          select p).ToListAsync();
+            //data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport).Include(x=>x.ImageFile)
+            //              select p).ToListAsync();
+            for (int i = 0; i < 8; i++)
+            {
+                data.Add(new Product()
+                {
+                    Id = i,
+                    Name = "Bóng Michael Jordan " + (i + 1),
+                    Brand = new Brand()
+                    {
+                        Id = 1,
+                        Name = "Sony",
+                    },
+                    Price = 20000,
+                    BrandId = 1,
+                    CategoryId = 1,
+                    Category = new Category()
+                    {
+                        Id = 1,
+                        Name ="Basketball ball",
+                        Sport = new Sport() { Id = 1, Name = "Basketball"},
+                        SportId = 1,
+                    },
+                    ImageFile = new ImageFile()
+                    {
+                        Id = 1,
+                        ImageUrl = null
+                    }
+                });
+            }
             return data;
         }
 
@@ -382,8 +417,20 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<User>> GetAllUser()
         {
             List<User> data = new List<User>();
-            data = await (from u in _db.Users
-                          select u).ToListAsync();
+            //data = await (from u in _db.Users
+            //              select u).ToListAsync();
+            for (int i = 1; i<9;i++)
+            {
+                data.Add(new User()
+                {
+                    Id = i,
+                    Email = "abc@xyc",
+                    Password = "askdj" + i,
+                    Name = "TestUser " + i,
+                    PhoneNumber = "123456789"
+
+                });
+            }
             return data;
         }
 
@@ -400,32 +447,32 @@ namespace WebApplication3.Controllers.API_Controller
         [HttpGet]
         public async Task<ProductModel> GetProductById(int id)
         {
-            Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport).Include(x => x.ImageFile)
-                                  where p.Id == id
-                                  select p).FirstOrDefaultAsync();
-            //Product data = new Product()
-            //{
-            //    Id = id,
-            //    Name = "Bóng Michael Jordan " + id,
-            //    CategoryId = 2,
-            //    BrandId = 1,
-            //    Price = 2000,
-            //    Brand = new Brand()
-            //    {
-            //        Id = 2,
-            //        Name = "Bra ",
-            //    },
-            //    Category = new Category()
-            //    {
-            //        Id = 1,
-            //        Name = "Cate ",
-            //        Sport = new Sport()
-            //        {
-            //            Id = 3,
-            //            Name = "Bóng chuyền ",
-            //        }
-            //    }
-            //};
+            //Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport).Include(x => x.ImageFile)
+            //                      where p.Id == id
+            //                      select p).FirstOrDefaultAsync();
+            Product data = new Product()
+            {
+                Id = id,
+                Name = "Bóng Michael Jordan " + id,
+                CategoryId = 2,
+                BrandId = 1,
+                Price = 2000,
+                Brand = new Brand()
+                {
+                    Id = 2,
+                    Name = "Bra ",
+                },
+                Category = new Category()
+                {
+                    Id = 1,
+                    Name = "Cate ",
+                    Sport = new Sport()
+                    {
+                        Id = 3,
+                        Name = "Bóng chuyền ",
+                    }
+                }
+            };
 
             ProductModel tmp = data.Cast();
 
@@ -436,43 +483,43 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<ProductModel>> GetProductFilter(ProductSearchModel model)
         {
             List<Product> data = new List<Product>();
-            var query = _db.Products.Select(x => x).Include(x => x.ImageFile).Include(x => x.Category.Sport).Include(x => x.Brand).AsQueryable();
-            if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
-                query = query.Where(x => x.Name.Contains(model.Name)).AsQueryable();
-            if (model.SportId > 0)
-                query = query.Where(x => x.Category.SportId == model.SportId).AsQueryable();
-            if (model.CateId > 0)
-                query = query.Where(x => x.CategoryId == model.CateId).AsQueryable();
-            if (model.BrandId > 0)
-                query = query.Where(x => x.BrandId == model.BrandId).AsQueryable();
-            data = await query.ToListAsync();
-            //for (int i = 1; i < 20; i++)
-            //{
-            //    data.Add(new Product
-            //    {
-            //        Id = i,
-            //        Name = "Test " + i,
-            //        Price = 2000,
-            //        BrandId = i % 3,
-            //        Brand = new Brand()
-            //        {
-            //            Id = i % 3,
-            //            Name = "Bra " + (i % 3),
-            //        },
-            //        CategoryId = i % 4,
-            //        Category = new Category()
-            //        {
-            //            Id = i % 4,
-            //            Name = "Cate " + (i % 4),
-            //            Sport = new Sport()
-            //            {
-            //                Id = i % 3,
-            //                Name = "Bóng chuyền " + (i % 3),
-            //            }
-            //        }
-            //    });
+            //var query = _db.Products.Select(x => x).Include(x => x.ImageFile).Include(x => x.Category.Sport).Include(x => x.Brand).AsQueryable();
+            //if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
+            //    query = query.Where(x => x.Name.Contains(model.Name)).AsQueryable();
+            //if (model.SportId > 0)
+            //    query = query.Where(x => x.Category.SportId == model.SportId).AsQueryable();
+            //if (model.CateId > 0)
+            //    query = query.Where(x => x.CategoryId == model.CateId).AsQueryable();
+            //if (model.BrandId > 0)
+            //    query = query.Where(x => x.BrandId == model.BrandId).AsQueryable();
+            //data = await query.ToListAsync();
+            for (int i = 1; i < 20; i++)
+            {
+                data.Add(new Product
+                {
+                    Id = i,
+                    Name = "Test " + i,
+                    Price = 2000,
+                    BrandId = i % 3,
+                    Brand = new Brand()
+                    {
+                        Id = i % 3,
+                        Name = "Bra " + (i % 3),
+                    },
+                    CategoryId = i % 4,
+                    Category = new Category()
+                    {
+                        Id = i % 4,
+                        Name = "Cate " + (i % 4),
+                        Sport = new Sport()
+                        {
+                            Id = i % 3,
+                            Name = "Bóng chuyền " + (i % 3),
+                        }
+                    }
+                });
 
-            //}
+            }
 
             if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
                 data = data.Where(x => x.Name.Contains(model.Name)).ToList();

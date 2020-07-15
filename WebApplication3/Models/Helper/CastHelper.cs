@@ -14,13 +14,13 @@ namespace WebApplication3.Models.Helper
                 BrandId = obj.BrandId,
                 BrandName = obj.Brand.Name,
                 CategoryId = obj.CategoryId,
-                CategoryName = obj.Category.Name,
+                CategoryName = obj.Category != null ? obj.Category.Name : "",
                 Name = obj.Name,
                 Id = obj.Id,
                 Price = obj.Price,
-                SportId = obj.Category.SportId,
-                SportName = obj.Category.Sport.Name,
-                ImageUrl = obj.ImageFile.ImageUrl,
+                SportId = obj.Category != null ? (obj.Category.Sport != null ? obj.Category.Sport.Id : 0) : 0,
+                SportName = obj.Category != null ? (obj.Category.Sport != null ? obj.Category.Sport.Name : "" ): "",
+                ImageUrl = obj.ImageFile != null ? obj.ImageFile.ImageUrl : null,
             };
             return data;
         }

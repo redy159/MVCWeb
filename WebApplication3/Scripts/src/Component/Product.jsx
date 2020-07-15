@@ -11,7 +11,7 @@ export default class Product extends React.Component {
         return (
         <div className="product-item">
             <a href={"/Home/ProductDetail?id="+ data.Id}>
-                <img src={data.ImageUrl}/> 
+                <img src={data.ImageUrl ? data.ImageUrl : "./../../../../Content/images/comming-soon.jpg"}/> 
                 <h2 class="name">
                     <strong><a href="" title={data.Name}>{data.Name}</a></strong>
                 </h2>

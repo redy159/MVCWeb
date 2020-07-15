@@ -72,7 +72,10 @@ class Header extends React.Component {
                         >
                         Đăng nhập
                     </button>
-                    <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Đăng ký</button>           
+                    <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Đăng ký</button>
+                    <a class="d-flex">
+                        <img class="d-block" src="./../../../../Content/images/cart.svg" alt="Cart" width="30" style={{margin: "auto 5px"}} />
+                    </a>           
                 </div>
                 <div class="navigation">
                     <div class="container">
@@ -116,7 +119,7 @@ class Header extends React.Component {
                 {/* <!-- signUp End -->
                   <!-- login --> */}
 
-                <Modal open={login} onClose={this.onCloseModalclose}>
+                <Modal open={login} onClose={()=> this.onCloseModalclose()}>
 
                     <div className="modal-body">
                         <h2>Login and Get <span>Started</span></h2>

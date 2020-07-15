@@ -16,6 +16,81 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount() {
+        this.getAllBrand();
+        this.getAllSport();
+        this.getAllCate();
+        this.getAllUser();
+        this.getAllProduct();
+    }
+
+    getAllProduct(){
+        fetch('/api/Manager/GetAllProduct', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({productList:data})
+            });
+    }
+
+    getAllUser(){
+        fetch('/api/Manager/GetAllUser', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({userList:data})
+            });
+    }
+
+    getAllBrand(){
+        fetch('/api/Manager/GetBrandMenu', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({brandList:data})
+            });
+    }
+
+    getAllSport(){
+        fetch('/api/Manager/GetSportMenu', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({sportList:data})
+            });
+    }
+    
+    getAllCate(){
+        fetch('/api/Manager/GetCategoryMenu', {
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({cateList:data})
+            });
     }
 
     addProduct(){
@@ -29,8 +104,8 @@ class Dashboard extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.isSuccess) alert("Add product successfully")
-                else alert("Failed to add product")
+                if (data.isSuccess) alertify.success("Add product successfully")
+                else alertify.error("Failed to add product")
             });
     }
 
@@ -65,7 +140,7 @@ class Dashboard extends React.Component {
             })
         }
         let {product} = this.state
-        console.log(this.state.product, "test")
+        console.log(this.state, "test")
         return (
             <React.Fragment>
                 <div class="container mt-3">
