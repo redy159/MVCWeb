@@ -163,6 +163,7 @@ class Dashboard extends React.Component {
                                         </tbody>
                                     </table>
                                     <br /><br />
+                                    <div class="add-new">
                                     <h2 class="text-center w-full">Add new product</h2>
                                     <div class="form-group">
                                         <label for="productName">Product name</label>
@@ -197,6 +198,7 @@ class Dashboard extends React.Component {
                                         </ImageUploading>
                                     </div>
                                     <button onClick={()=>this.addProduct()} class="btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-customer" role="tabpanel" aria-labelledby="v-pills-customer-tab">
                                     <table class="table">
