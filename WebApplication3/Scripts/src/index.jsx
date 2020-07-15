@@ -10,6 +10,8 @@ class App extends React.Component {
         this.state = {
             currPage:1,
         }
+        if (!localStorage.cart)
+            localStorage.setItem("cart",JSON.stringify([]))
     }
 
     componentDidMount() {

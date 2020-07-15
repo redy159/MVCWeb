@@ -5,13 +5,7 @@ class Cart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            cartItem: [
-                { Name: "pro 1", Brand: "brand 1", Price: 214000, Count: 1 },
-                { Name: "pro 2", Brand: "brand 1", Price: 214000, Count: 1 },
-                { Name: "pro 3", Brand: "brand 1", Price: 214000, Count: 1 },
-                { Name: "pro 4", Brand: "brand 1", Price: 214000, Count: 1 },
-                { Name: "pro 5", Brand: "brand 1", Price: 214000, Count: 1 },
-            ],
+            cartItem: JSON.parse(localStorage.cart),
             cartInfo: {
                 userId: 12,
                 total: 214142,
@@ -19,9 +13,11 @@ class Cart extends React.Component {
             }
         }
     }
+
     render() {
         const { login, sign } = this.state;
-
+        console.log(this.state.cartItem)
+        
         //if (!this.state.data) return null;
         return (
             <React.Fragment >
@@ -30,13 +26,13 @@ class Cart extends React.Component {
                     <div class="d-flex flex-row cart">
                         <img class="m-auto" src="./../../../Content/images/comming-soon.jpg"/> 
                         <div class="prod-info">
-                            <h2>{item.Name}</h2>
-                            <p>{item.Brand}</p>
+                            <h2>{item.Product.Name}</h2>
+                            <p>{item.Product.BrandName}</p>
                         </div>
-                        <div class="prod-price text-center">Đơn giá <br/>{item.Price.toLocaleString()} đ</div>
+                        <div class="prod-price text-center">Đơn giá <br/>{item.Product.Price.toLocaleString()} đ</div>
                         <div class="prod-price text-center">
                             <p>Amount Of Money</p>
-                            <p>{item.Price.toLocaleString()} đ</p>
+                            <p>{item.Product.Price.toLocaleString()} đ</p>
                         </div>
                         <button class="btn btn-danger m-auto">Delete</button>
                     </div>
