@@ -3,7 +3,12 @@
 module.exports = {
   entry: {
       index: "./Scripts/src/index.jsx",
-      header: "./Scripts/src/Component/header.jsx",
+      header: "./Scripts/src/Component/Header.jsx",
+      productDetail: "./Scripts/src/ProductDetail.jsx",
+      productByCategory: "./Scripts/src/ProductByCategory.jsx",
+      footer: "./Scripts/src/Component/Footer.jsx",
+      dashboard: "./Scripts/src/Dashboard.jsx",
+      cart: "./Scripts/src/Cart.jsx"
   },
   output: {
     path: path.resolve(__dirname, "../dist"),

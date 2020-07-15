@@ -13,19 +13,20 @@ namespace WebApplication3.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult ProductDetail(int id=0)
         {
-            ViewBag.Message = "Your application description page.";
-
+            ViewBag.param = id;
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult ProductByCategory()
         {
-            ViewBag.Message = "Your contact page.";
-
+            
             return View();
         }
-
+        public ActionResult Cart()
+        {
+            return View();
+        }
     }
 }

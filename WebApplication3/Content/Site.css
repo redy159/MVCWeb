@@ -3,11 +3,17 @@
 }
 
 .product-wrap {
-    width: 830px;
+    width: 800px;
     flex-wrap: wrap;
     margin: auto;
-    justify-content: space-between;
     margin-top: 20px;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -28,4 +34,88 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+/*This is for product detail*/
+.product-img {
+    width: 50%;
+    margin: 10px;
+    padding: 5px;
+}
+
+.product-img img {
+    width: 100%;
+}
+
+.product-info {
+    width: 40%;
+    margin-left: auto;
+    padding: 30px 10px;
+}
+.footer {
+    background: #586ab8;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #586ab8;
+    margin: 0 10px 5px 10px;
+}
+.nav-pills .nav-link {
+    border-radius: .25rem;
+}
+
+.nav-link {
+    display: block;
+    padding: 5px 15px;
+}
+.col-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+.col-9 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+.tab-content>.active {
+    display: block;
+}
+
+.tab-content>.tab-pane {
+    display: none;
+}
+.fade.show {
+    opacity: 1;
+}
+.fade {
+    opacity: 0;
+    transition: opacity .15s linear;
+}
+.w-full {
+    width: 100%;
+}
+.add-new {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #586ab8;
+    margin: 20px;
+    padding: 20px;
+}
+.add-new .form-group {
+    width: 50%;
+    padding: 10px;
+}
+.add-new button {
+    width: 60%;
+    margin: auto;
+}
+.mt-3 {
+    margin-top: 30px;
 }

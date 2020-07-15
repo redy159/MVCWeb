@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApplication3.Models;
+using WebApplication3.Models.Helper;
 
 namespace WebApplication3.Controllers.API_Controller
 {
@@ -89,23 +90,23 @@ namespace WebApplication3.Controllers.API_Controller
                     }
                 }
            };
-                return data;
+            return data;
         }
 
         [HttpGet]
         public async Task<List<Product>> GetNewestProduct(int pageNumber)
-        { 
+        {
             List<Product> data = new List<Product>();
-            //data = await (from p in _db.Products
+            //data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport)
             //              orderby p.Id descending
             //              select p).Skip(pageNumber*8).Take(8).ToListAsync();
 
-            for (int i = 0; i<8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 data.Add(new Product()
                 {
-                    Id = i+1,
-                    Name = "Bóng Michael Jordan "+(i+1),
+                    Id = i + pageNumber + 1,
+                    Name = "Bóng Michael Jordan " + pageNumber + (i + 1),
                     Brand = new Brand()
                     {
                         Id = 1,
@@ -123,7 +124,7 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<Product>> GetAll()
         {
             List<Product> data = new List<Product>();
-            data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category)
+            data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
                           select p).ToListAsync();
             return data;
         }
@@ -131,11 +132,93 @@ namespace WebApplication3.Controllers.API_Controller
         [HttpGet]
         public async Task<Product> GetProductById(int id)
         {
-            Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category)
-                                  where p.Id == id
-                                  select p).FirstOrDefaultAsync();
-
+            //Product data = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category.Sport)
+            //                      where p.Id == id
+            //                      select p).FirstOrDefaultAsync();
+            Product data = new Product()
+            {
+                Id = id,
+                Name = "Bóng Michael Jordan " + id,
+                CategoryId = 2,
+                BrandId = 1,
+                Price = 2000,
+                Brand = new Brand()
+                {
+                    Id = 2,
+                    Name = "Bra ",
+                },
+                Category = new Category()
+                {
+                    Id = 1,
+                    Name = "Cate ",
+                    Sport = new Sport()
+                    {
+                        Id = 3,
+                        Name = "Bóng chuyền ",
+                    }
+                }
+            };
             return data;
+        }
+
+        [HttpPost]
+        public async Task<List<ProductModel>> GetProductFilter(ProductSearchModel model)
+        {
+            List<Product> data = new List<Product>();
+            //var query = _db.Products.Select(x => x).Include(x=> x.Category.Sport).Include(x => x.Brand).AsQueryable();
+            //if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
+            //    query = query.Where(x => x.Name.Contains(model.Name)).AsQueryable();
+            //if (model.SportId > 0)
+            //    query = query.Where(x => x.Category.SportId == model.SportId).AsQueryable();
+            //if (model.CateId > 0)
+            //    query = query.Where(x => x.CategoryId == model.CateId).AsQueryable();
+            //if (model.BrandId > 0)
+            //    query = query.Where(x => x.BrandId == model.BrandId).AsQueryable();
+            //data = await query.ToListAsync();
+            for (int i = 1; i < 20; i++)
+            {
+                data.Add(new Product
+                {
+                    Id = i,
+                    Name = "Test " + i,
+                    Price = 2000,
+                    BrandId = i % 3,
+                    Brand = new Brand()
+                    {
+                        Id = i%3,
+                        Name = "Bra "+(i%3),
+                    },
+                    CategoryId = i % 4,
+                    Category = new Category()
+                    {
+                        Id = i % 4,
+                        Name = "Cate " + (i % 4),
+                        Sport = new Sport()
+                        {
+                            Id = i % 3,
+                            Name = "Bóng chuyền " + (i % 3),
+                        }
+                    }
+                });
+
+            }
+
+            if (!String.IsNullOrEmpty(model.Name) && !String.IsNullOrWhiteSpace(model.Name))
+                data = data.Where(x => x.Name.Contains(model.Name)).ToList();
+            if (model.SportId > 0)
+                data = data.Where(x => x.Category.SportId == model.SportId).ToList();
+            if (model.CateId > 0)
+                data = data.Where(x => x.CategoryId == model.CateId).ToList();
+            if (model.BrandId > 0)
+                data = data.Where(x => x.BrandId == model.BrandId).ToList();
+
+            List<ProductModel> res = new List<ProductModel>();
+
+            for (int i=0;i< data.Count;i++)
+            {
+                res.Add(data[i].Cast()); 
+            }
+            return res;
         }
 
         private bool ProductValidation(Product data)

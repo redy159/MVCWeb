@@ -7,7 +7,9 @@ import { Carousel } from 'react-responsive-carousel';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            currPage:1,
+        }
     }
 
     componentDidMount() {
@@ -24,7 +26,7 @@ class App extends React.Component {
 
     getNextPage() {
         console.log(this)
-        fetch('/api/Manager/GetNewestProduct?pageNumber=1', {
+        fetch('/api/Manager/GetNewestProduct?pageNumber='+this.state.currPage, {
             method: "Get",
             headers: {
                 'Accept': 'application/json',
@@ -36,15 +38,14 @@ class App extends React.Component {
                 var tmp = [].concat(this.state.newProduct)
                 console.log("test1",tmp)
                 tmp = tmp.concat(data)
-                console.log("test2",tmp)
-                this.setState({newProduct : tmp})
+                console.log("test2", tmp)
+                this.setState({ newProduct: tmp, currPage: this.state.currPage+1 })
             });
     }
 
 
     render() {
         if (!this.state.newProduct) return null;
-        console.log(this.state.newProduct ? this.state.newProduct : "000");
         const { newProduct } = this.state;
         return (
             <React.Fragment>
@@ -69,6 +70,8 @@ class App extends React.Component {
                 <div class="d-flex flex-row">
                     <button type="button" class="btn btn-primary mr-auto ml-auto" onClick={()=>{this.getNextPage()}}>Load more</button>
                 </div>
+                <br/><br/><br/><br/><br/>
+           
             </React.Fragment>
         );
     }
