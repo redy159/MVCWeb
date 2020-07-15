@@ -18,7 +18,7 @@ namespace WebApplication3.Models.Helper
                 Name = obj.Name,
                 Id = obj.Id,
                 Price = obj.Price,
-                SportId = obj.Category.SportId,
+                SportId = obj.Category != null ? (obj.Category.Sport != null ? obj.Category.Sport.Id : 0) : 0,
                 SportName = obj.Category != null ? (obj.Category.Sport != null ? obj.Category.Sport.Name : "" ): "",
                 ImageUrl = obj.ImageFile != null ? obj.ImageFile.ImageUrl : null,
             };

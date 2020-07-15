@@ -36,7 +36,7 @@ class App extends React.Component {
                 console.log("test1",data)
                 tmp = tmp.concat(data.Data)
                 console.log("test2", tmp)
-                this.setState({ newProduct: tmp, currPage: this.state.currPage+1, maxCount: data.MaxCount })
+                this.setState({ newProduct: tmp, currPage: this.state.currPage+1, maxCount: data.MaxNumber })
             });
     }
 
