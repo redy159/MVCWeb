@@ -20,89 +20,198 @@ namespace WebApplication3.Controllers.API_Controller
             _db.Configuration.LazyLoadingEnabled = false;
         }
 
-        [HttpPost]
-        public async Task<int> AddSport(Sport request)
+        private Ack SportValidation(Sport data)
         {
-            var sport = new Sport()
+            Ack ack = new Ack();
+            ack.IsSuccess = true;
+            if (!string.IsNullOrEmpty(data.Name) && !string.IsNullOrWhiteSpace(data.Name))
             {
-               Id = request.Id,
-               Name = request.Name,
-               Categories = request.Categories,
-            };
-            _db.Sports.Add(sport);
-            await _db.SaveChangesAsync();
-            return sport.Id;
+                ack.IsSuccess = false;
+                ack.Message.Add("Name can't be empty");
+            }
+
+            return ack;
         }
 
         [HttpPost]
-        public async Task<int> DeleteSport(int sportId)
+        public async Task<Ack> AddSport(Sport request)
         {
+            Ack ack = SportValidation(request);
+            if (ack.IsSuccess)
+            {
+                var sport = new Sport()
+                {
+                    Id = request.Id,
+                    Name = request.Name,
+                };
+                _db.Sports.Add(sport);
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    ack.IsSuccess = false;
+                    ack.Message.Add(e.Message);
+                }
+            }
+            return ack;
+        }
+
+        [HttpPost]
+        public async Task<Ack> DeleteSport(int sportId)
+        {
+            Ack ack = new Ack();
+            ack.IsSuccess = true;
             var sport = await _db.Sports.FindAsync(sportId);
             if (sport == null)
-                return 0;
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Sport not found");
+            }
             _db.Sports.Remove(sport);
-            return await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add(e.Message);
+            }
+            return ack;
         }
 
         [HttpPost]
-        public async Task<int> UpdateSport(Sport request)
+        public async Task<Ack> UpdateSport(Sport request)
         {
+            Ack ack = new Ack()
+            {
+                IsSuccess = true,
+            };
             int id = request.Id;
-            var sport= await _db.Sports.FindAsync(id);
+            var sport = await _db.Sports.FindAsync(id);
             if (sport == null)
-                return 0;
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Can't find sport");
+            }
 
-            if (!string.IsNullOrEmpty(request.Name))
+            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrWhiteSpace(request.Name))
                 sport.Name = request.Name;
 
 
             if (request.Id != 0)
                 sport.Id = request.Id;
 
-            return await _db.SaveChangesAsync();
-        }
-
-
-        [HttpPost]
-        public async Task<int> AddCategory(Category request)
-        {
-            var category = new Category()
+            try
             {
-                Id = request.Id,
-                Name = request.Name,
-                SportId = request.SportId,
-            };
-            _db.Categories.Add(category);
-            await _db.SaveChangesAsync();
-            return category.Id;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add(e.Message);
+            }
+
+            return ack;
+        }
+
+        private Ack CategoryValidation(Category data)
+        {
+            Ack ack = new Ack();
+            ack.IsSuccess = true;
+            if (!string.IsNullOrEmpty(data.Name) && !string.IsNullOrWhiteSpace(data.Name))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Name can't be empty");
+            }
+            if (data.SportId == 0)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Sport not selected");
+            }
+            return ack;
         }
 
         [HttpPost]
-        public async Task<int> DeleteCategory(int CategoryId)
+        public async Task<Ack> AddCategory(Category request)
         {
+            Ack ack = CategoryValidation(request);
+            if (ack.IsSuccess)
+            {
+                var category = new Category()
+                {
+                    Id = request.Id,
+                    Name = request.Name,
+                    SportId = request.SportId,
+                };
+                _db.Categories.Add(category);
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    ack.IsSuccess = false;
+                    ack.Message.Add(e.Message);
+                }
+            }
+            return ack;
+        }
+
+        [HttpPost]
+        public async Task<Ack> DeleteCategory(int CategoryId)
+        {
+            Ack ack = new Ack() { IsSuccess = true };
             var category = await _db.Categories.FindAsync(CategoryId);
             if (category == null)
                 return 0;
             _db.Categories.Remove(category);
-            return await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add(e.Message);
+            }
+            return ack;
         }
 
         [HttpPost]
-        public async Task<int> UpdateCategory(Category request)
+        public async Task<Ack> UpdateCategory(Category request)
         {
-            int id = request.Id;
-            var category = await _db.Categories.FindAsync(id);
-            if (category == null)
-                return 0;
+            Ack ack = CategoryValidation(request);
+            if (ack.IsSuccess)
+            {
+                int id = request.Id;
+                var category = await _db.Categories.FindAsync(id);
+                if (category == null)
+                {
+                    ack.IsSuccess = false;
+                    ack.Message.Add("Category not found");
+                }
 
-            if (!string.IsNullOrEmpty(request.Name))
-                category.Name = request.Name;
+                if (!string.IsNullOrEmpty(request.Name))
+                    category.Name = request.Name;
 
 
-            if (request.SportId!= 0)
-                category.SportId = request.SportId;
+                if (request.SportId != 0)
+                    category.SportId = request.SportId;
 
-            return await _db.SaveChangesAsync();
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    ack.IsSuccess = false;
+                    ack.Message.Add(e.Message);
+                }
+            }
+            return ack;
         }
 
         [HttpGet]
@@ -221,7 +330,7 @@ namespace WebApplication3.Controllers.API_Controller
         public async Task<List<ProductModel>> GetNewestProduct(int pageNumber)
         {
             List<Product> data = new List<Product>();
-            data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x=>x.ImageFile)
+            data = await (from p in _db.Products.Include(x => x.Brand).Include(x => x.Category.Sport).Include(x => x.ImageFile)
                           orderby p.Id descending
                           select p).Skip(pageNumber * 8).Take(8).ToListAsync();
 
@@ -242,7 +351,7 @@ namespace WebApplication3.Controllers.API_Controller
             //    });
             //}
             List<ProductModel> tmp = new List<ProductModel>();
-            for (int i= 0; i< data.Count;i++)
+            for (int i = 0; i < data.Count; i++)
             {
                 tmp.Add(data[i].Cast());
             }
