@@ -19,7 +19,8 @@ class Cart extends React.Component {
         console.log(status)
         if (!status.IsLogin) alertify.error("Bạn phải đăng nhập trước")
         else{
-        var tmp = { Item: this.state.cartItem, Total: this.state.cartInfo.total, UserId : status.UserId}
+        var tmp = { Item: this.state.cartItem, Total: this.state.total, UserId : status.UserId}
+        console.log(tmp)
         fetch('/api/Manager/CreateReceipt', {
             method: "Post",
             headers: {
@@ -32,7 +33,7 @@ class Cart extends React.Component {
             .then(data => {
                 if (data.IsSuccess) {
                     localStorage.cart = JSON.stringify([]);
-                    this.setState({cartItem:[]})
+                    this.setState({cartItem:[],total:0})
                 }
             });
         }
