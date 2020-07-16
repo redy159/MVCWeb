@@ -32,7 +32,7 @@ class ProductByCategory extends React.Component {
                 <nav aria-label="breadcrumb" style={{ backgroundColor: "#fff!important"}}>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">{data.CategoryName? data.CategoryName : "Cate"}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{data[0]? data[0].CategoryName : "Cate"}</a></li>
                     </ol>
                 </nav>
                 <div className="flex product-wrap">

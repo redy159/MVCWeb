@@ -8,14 +8,14 @@ class Cart extends React.Component {
             cartItem: JSON.parse(localStorage.cart),
             cartInfo: {
                 userId: 12,
-                total: 214142,
                 cartId: 2,
-            }
+            },
+            total : 0
         }
     }
 
-    createReceipt(){
-        var tmp = {Item: this.state.cartItem, Total: this.state.cartInfo.total}
+    createReceipt() {
+        var tmp = { Item: this.state.cartItem, Total: this.state.cartInfo.total }
         fetch('/api/Manager/CreateReceipt', {
             method: "Post",
             headers: {
@@ -25,33 +25,54 @@ class Cart extends React.Component {
             body: JSON.stringify(tmp)
         })
             .then(response => response.json())
-            .then(data => this.setState({ data: data }));
+            .then(data => {
+                if (data.IsSuccess) {
+                    localStorage.cart = JSON.stringify([]);
+                    this.setState({ data: data })
+                }
+            });
+    }
+
+    componentDidMount(){
+        var total = 0
+        this.state.cartItem.forEach(element => {
+            total += element.Product.Price*element.Quantity
+        });
+        this.setState({total: total})
+    }
+
+    deleteItem(item){
+        var tmp = [].concat(this.state.cartItem)
+        tmp.splice(this.state.cartItem.indexOf(item),1);
+        localStorage.cart = JSON.stringify(tmp);
+        this.setState({cartItem:tmp})
     }
 
     render() {
         const { login, sign } = this.state;
         console.log(this.state.cartItem)
-        
+
         //if (!this.state.data) return null;
         return (
             <React.Fragment >
-                <div class="container">
-                {this.state.cartItem? this.state.cartItem.map((item)=> (
-                    <div class="d-flex flex-row cart">
-                        <img class="m-auto" src={item.Product.ImageUrl ? item.Product.ImageUrl : "./../../../Content/images/comming-soon.jpg"}/> 
-                        <div class="prod-info">
-                            <h2>{item.Product.Name}</h2>
-                            <p>{item.Product.BrandName}</p>
+                <div class="container d-flex flex-column">
+                    {this.state.cartItem ? this.state.cartItem.map((item) => (
+                        <div class="d-flex flex-row cart">
+                            <img class="m-auto" src={item.Product.ImageUrl ? item.Product.ImageUrl : "./../../../Content/images/comming-soon.jpg"} />
+                            <div class="prod-info">
+                                <h2>{item.Product.Name}</h2>
+                                <p>{item.Product.BrandName}</p>
+                            </div>
+                            <div class="prod-price text-center">Price <br />{item.Product.Price.toLocaleString()} đ</div>
+                            <div class="prod-price text-center">
+                                <p>Quantity</p>
+                                <p>x{item.Quantity}</p>
+                            </div>
+                            <button onClick={(e,item)=>this.deleteItem(item)} class="btn btn-danger m-auto">Delete</button>
                         </div>
-                        <div class="prod-price text-center">Đơn giá <br/>{item.Product.Price.toLocaleString()} đ</div>
-                        <div class="prod-price text-center">
-                            <p>Amount Of Money</p>
-                            <p>{item.Product.Price.toLocaleString()} đ</p>
-                        </div>
-                        <button onClick={()=>this.createReceipt()} class="btn btn-danger m-auto">Delete</button>
-                    </div>
-                )):null}
-                <h1 class="text-right" style={{padding: "0 35px", marginTop: "0"}}>Total: {this.state.cartInfo.total.toLocaleString()} đ</h1>
+                    )) : null}
+                    <h1 class="text-right" style={{ padding: "0 35px", marginTop: "0" }}>Total: {this.state.total.toLocaleString()} đ</h1>
+                    <button onClick={() => this.createReceipt()} style={{margin: "10px auto"}} class="btn btn-success m-auto">Check out</button>
                 </div>
             </React.Fragment>
         )

@@ -104,7 +104,7 @@ class Dashboard extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.isSuccess) alertify.success("Add product successfully")
+                if (data.IsSuccess) alertify.success("Add product successfully")
                 else alertify.error("Failed to add product")
             });
     }
@@ -187,7 +187,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div class="col-9">
                             <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade active show" id="v-pills-receipt" role="tabpanel" aria-labelledby="v-pills-receipt-tab">
+                                <div class="tab-pane fade" id="v-pills-receipt" role="tabpanel" aria-labelledby="v-pills-receipt-tab">
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -209,7 +209,7 @@ class Dashboard extends React.Component {
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-product-tab">
+                                <div class="tab-pane fade active show" id="v-pills-product" role="tabpanel" aria-labelledby="v-pills-product-tab">
                                     <table class="table">
                                         <thead>
                                             <tr>

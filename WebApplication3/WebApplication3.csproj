@@ -174,9 +174,6 @@
     <Compile Include="Product.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductReview.cs">
-      <DependentUpon>ShopWeb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receipt.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>

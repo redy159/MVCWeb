@@ -6,7 +6,7 @@ class ProductDetail extends React.Component {
         super(props);
         this.state = {
             id: this.props.param,
-            quantity: 0
+            quantity: 1
         }
     }
 
@@ -57,9 +57,9 @@ class ProductDetail extends React.Component {
                     </div>
                     <div class="product-info flex flex-column">
                         <h1>{data.Name}</h1><br/><br/>
-                        <p>{data.BrandName? data.BrandName: ""}</p>
-                        <p>{data.CategoryName? data.CategoryName: ""}</p><br/><br/><br/>
-                        <h2>{data.Price? data.Price: ""}</h2><br/>
+                        <p><b>Brand: </b>{data.BrandName? data.BrandName: ""}</p>
+                        <p><b>Category: </b>{data.CategoryName? data.CategoryName: ""}</p><br/><br/><br/>
+                        <h2>{data.Price? data.Price.toLocaleString(): ""}đ</h2><br/>
                         <button type="button" class="btn btn-warning w-full p-5" onClick={()=>{this.addToCart()}}>Thêm vào giỏ hàng</button>
                     </div>
                 </div>

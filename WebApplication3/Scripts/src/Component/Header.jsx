@@ -65,7 +65,7 @@ class Header extends React.Component {
  
                 <div class="container flex flex-row pl-3 pr-3">
                     <div class="logo">
-                        <a><h2>Sport <br />Equipment</h2></a>
+                        <a href="/home"><h2>Sport <br />Equipment</h2></a>
                     </div>
                     <button type="button" class="btn btn-light log-in"
                         onClick={() => { this.onOpenModalLogin() }}
@@ -73,7 +73,7 @@ class Header extends React.Component {
                         Đăng nhập
                     </button>
                     <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Đăng ký</button>
-                    <a class="d-flex">
+                    <a class="d-flex" href="/home/Cart">
                         <img class="d-block" src="./../../../../Content/images/cart.svg" alt="Cart" width="30" style={{margin: "auto 5px"}} />
                     </a>           
                 </div>
@@ -83,10 +83,10 @@ class Header extends React.Component {
                             <ul class="col flex justify-content-between">
                                 {this.state.data.map((item) => (
                                     <li class="dropdown">
-                                        <a><strong>{item.Name}</strong></a>
+                                        <a href={"/home/ProductByCategory?sportId="+item.Id}><strong>{item.Name}</strong></a>
                                         <ul class="dropdown-content">
                                             {item.Categories.map((cate) => (
-                                                <li><a href="">{cate.Name}</a></li>
+                                                <li><a href={"/home/ProductByCategory?cateId="+cate.Id}>{cate.Name}</a></li>
                                             ))}
                                         </ul>
                                     </li>
