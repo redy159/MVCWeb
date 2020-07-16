@@ -26,7 +26,7 @@ export default class EditForm extends React.Component {
                             <input class="form-control" type="email" id={prop +"EditName"}  aria-required="true"/>
                         </div>
                         )):null}
-                        <input className="btn btn-primary w-full" type="button" value="Sign Up" onClick={() => this.handleEdit()} />
+                        <input className="btn btn-primary w-full" type="button" value="Submit" onClick={() => this.props.submit()} />
                     </form>
                 </div>
         </div>

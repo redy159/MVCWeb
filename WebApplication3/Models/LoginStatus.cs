@@ -5,10 +5,11 @@ using System.Web;
 
 namespace WebApplication3.Models
 {
-    public class CartModel
+    public class LoginStatus
     {
-        public List<ReceiptProductModel> Item { get; set; }
-        public int Total { get; set; }
+        public string Name { get; set; }
+        public int UserType { get; set; }
+        public bool IsLogin { get; set; }
         public int UserId { get; set; }
     }
 }

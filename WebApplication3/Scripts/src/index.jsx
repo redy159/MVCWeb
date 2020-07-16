@@ -19,6 +19,7 @@ class App extends React.Component {
         this.getNextPage();
     }
 
+
     getNextPage() {
         console.log(this)
         fetch('/api/Manager/GetNewestProduct?pageNumber='+this.state.currPage, {
@@ -65,7 +66,7 @@ class App extends React.Component {
                         <Product data={item} />
                     ))}
                 </div>
-                {this.state.maxCount >= newProduct.length ?
+                {this.state.maxCount > newProduct.length ?
                 <div class="d-flex flex-row">
                     <button type="button" class="btn btn-primary mr-auto ml-auto" onClick={()=>{this.getNextPage()}}>Load more</button>
                 </div>: null}

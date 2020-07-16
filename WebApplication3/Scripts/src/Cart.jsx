@@ -15,7 +15,11 @@ class Cart extends React.Component {
     }
 
     createReceipt() {
-        var tmp = { Item: this.state.cartItem, Total: this.state.cartInfo.total }
+        var status = JSON.parse(localStorage.loginStatus)
+        console.log(status)
+        if (!status.IsLogin) alertify.error("Bạn phải đăng nhập trước")
+        else{
+        var tmp = { Item: this.state.cartItem, Total: this.state.cartInfo.total, UserId : status.UserId}
         fetch('/api/Manager/CreateReceipt', {
             method: "Post",
             headers: {
@@ -28,30 +32,38 @@ class Cart extends React.Component {
             .then(data => {
                 if (data.IsSuccess) {
                     localStorage.cart = JSON.stringify([]);
-                    this.setState({ data: data })
+                    this.setState({cartItem:[]})
                 }
             });
+        }
     }
 
     componentDidMount(){
         var total = 0
+        total = this.totalCalc()
+        this.setState({total: total})
+    }
+
+    totalCalc()
+    {
+        var total = 0
         this.state.cartItem.forEach(element => {
             total += element.Product.Price*element.Quantity
         });
-        this.setState({total: total})
+        return total
     }
 
     deleteItem(item){
         var tmp = [].concat(this.state.cartItem)
         tmp.splice(this.state.cartItem.indexOf(item),1);
         localStorage.cart = JSON.stringify(tmp);
-        this.setState({cartItem:tmp})
+        var total = this.totalCalc();
+        this.setState({cartItem:tmp,total:total})
     }
 
     render() {
         const { login, sign } = this.state;
         console.log(this.state.cartItem)
-
         //if (!this.state.data) return null;
         return (
             <React.Fragment >

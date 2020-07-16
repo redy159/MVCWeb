@@ -7,8 +7,8 @@ namespace WebApplication3.Models
 {
     public class Ack
     {
-        public List<string> Message { get; set; }
-        public List<string> Error { get; set; }
+        public List<string> Message = new List<string>();
+        public List<string> Error = new List<string>();
         public bool IsSuccess { get; set; }
     }
 
