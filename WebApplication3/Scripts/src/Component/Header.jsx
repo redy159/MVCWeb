@@ -51,13 +51,18 @@ class Header extends React.Component {
     
     };  
 
-    handleSubmit() {
+    handleLogin() {
         console.log("Submitting");
-        console.log("username : " + document.getElementById("loginEmail").value);
+        console.log("email : " + document.getElementById("loginEmail").value);
         console.log("pass : " + document.getElementById("loginPass").value);
-        //console.log(this.state);
     };
-
+    handleSignup() {
+        console.log("Submitting");
+        console.log("email : " + document.getElementById("signupEmail").value);
+        console.log("pass : " + document.getElementById("signupPass").value);
+        console.log("username : " + document.getElementById("signupName").value);
+        console.log("phone : " + document.getElementById("signupPhonenumber").value);
+    };
     render() {
         const { login, sign } = this.state;
        
@@ -69,10 +74,8 @@ class Header extends React.Component {
                     <div class="logo">
                         <a href="/home"><h2>Sport <br />Equipment</h2></a>
                     </div>
-                    <button type="button" class="btn btn-light log-in"onClick={() => { this.onOpenModalLogin() }}>
-                        Đăng nhập
-                    </button>
-                    <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Đăng ký</button>
+                    <button type="button" class="btn btn-light log-in"onClick={() => { this.onOpenModalLogin() }}>Login</button>
+                    <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Sign Up</button>
                     <a class="d-flex" href="/home/Cart">
                         <img class="d-block" src="./../../../../Content/images/cart.svg" alt="Cart" width="30" style={{margin: "auto 5px"}} />
                     </a>           
@@ -103,15 +106,22 @@ class Header extends React.Component {
                         <h2>Sign up<span> Free!</span></h2>
                         <form className="form-signin" novalidate="novalidate">
                         <div className="form-group">
-                                <input className="form-control" type="text" name="name" id="name" placeholder="First Name" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }} />
+                            <label for="signupEmail">Email</label>
+                            <input class="form-control" type="email" id="signupEmail" placeholder="E-mail"  aria-required="true"/>
                         </div>
                         <div className="form-group">
-                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }} />
+                            <label for="signupPass">Password</label>
+                            <input class="form-control" type="password" id="signupPass" placeholder="Password" required="" aria-required="true"/>
                         </div>
                         <div className="form-group">
-                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }} />
+                            <label for="signupName">User name</label>
+                            <input class="form-control" type="password" id="signupName" placeholder="User name" required="" aria-required="true"/>
                         </div>
-                        <input className="btn btn-light sign-up" type="button" value="Sign Up" onClick={() => this.handleSubmit()} />
+                        <div className="form-group">
+                            <label for="signupPhonenumber">Phone number</label>
+                            <input class="form-control" type="password" id="signupPhonenumber" placeholder="09012333333" required="" aria-required="true"/>
+                        </div>
+                        <input className="btn btn-primary w-full" type="button" value="Sign Up" onClick={() => this.handleSignup()} />
                         </form>
                     </div>
                 </Modal>
@@ -132,7 +142,7 @@ class Header extends React.Component {
                                 <label for="loginPass">Password</label>
                                 <input class="form-control" type="password" id="loginPass" placeholder="Password" required="" aria-required="true"/>
                             </div>
-                            <input className="btn btn-primary w-full" type="button" value="Login" onClick={() => this.handleSubmit()} />
+                            <input className="btn btn-primary w-full" type="button" value="Login" onClick={() => this.handleLogin()} />
                         </form>
                     </div>
                 </Modal>
