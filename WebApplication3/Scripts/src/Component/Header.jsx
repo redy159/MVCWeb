@@ -3,19 +3,19 @@ import ReactDOM from 'react-dom'
 import { Modal } from "react-responsive-modal";
 import 'react-responsive-modal/styles.css';
 import './../../../Content/header.css'
-class Header extends React.Component {  
-    constructor(props)
-    {
+class Header extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
             sign: false,
             login: false,
-           
-        };  
+
+        };
     }
 
 
     componentDidMount() {
+        this.checkLogin();
         fetch('/api/Manager/GetSportMenu', {
             method: "Get",
             headers: {
@@ -24,23 +24,38 @@ class Header extends React.Component {
             },
         })
             .then(response => response.json())
-            .then(data=> this.setState({data:data}));
-        
+            .then(data => this.setState({ data: data }));
+
+    }
+
+    checkLogin(){
+        fetch('/api/Manager/CheckLogin',{
+            method: "Get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(JSON.stringify(data))
+                localStorage.loginStatus = JSON.stringify(data)
+            });
     }
 
     onOpenModal() {
         this.setState({ sign: true });
     };
 
-    onOpenModalLogin () {
+    onOpenModalLogin() {
         this.setState({ login: true });
     };
 
-    onCloseModal () {
+    onCloseModal() {
         this.setState({ sign: false });
     };
 
-    onCloseModalclose (){
+    onCloseModalclose() {
         this.setState({ login: false });
     };
 
@@ -48,37 +63,92 @@ class Header extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-    
-    };  
+
+    };
+
 
     handleLogin() {
         console.log("Submitting login");
         console.log("email : " + document.getElementById("loginEmail").value);
         console.log("pass : " + document.getElementById("loginPass").value);
+        var tmp = {
+            Email: document.getElementById("loginEmail").value,
+            Password: btoa(document.getElementById("loginPass").value),
+        }
+        fetch('/api/Manager/Login', {
+            method: "Post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(tmp)
+        })
+            .then(response => response.json())
+            .then(data => {
+                localStorage.loginStatus = JSON.stringify(data.Data)
+                if (data.IsSuccess) {
+                    alertify.success("Login successfully")
+                    this.onCloseModalclose();
+                }
+                else {
+                    data.Message.forEach(x => { alertify.error(x) })
+                }
+            });
     };
-    handleSignup() {
+
+    handleSignup(e) {
+        e.preventDefault()
         console.log("Submitting sign up");
         console.log("email : " + document.getElementById("signupEmail").value);
         console.log("pass : " + document.getElementById("signupPass").value);
         console.log("username : " + document.getElementById("signupName").value);
         console.log("phone : " + document.getElementById("signupPhonenumber").value);
+        var tmp = {
+            Email: document.getElementById("signupEmail").value,
+            Password: btoa(document.getElementById("signupPass").value),
+            Name: document.getElementById("signupName").value,
+            PhoneNumber: document.getElementById("signupPhonenumber").value,
+        }
+        console.log(tmp)
+        fetch('/api/Manager/AddUser', {
+            method: "Post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(tmp)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.IsSuccess) {
+                    alertify.success("Sign up successfully")
+                    this.onCloseModal()
+                }
+                else alertify.error("Failed to signup")
+            });
     };
     render() {
         const { login, sign } = this.state;
-       
         if (!this.state.data) return null;
+        
+        var status = JSON.parse(localStorage.loginStatus)
+        console.log(status)
         return (
             <React.Fragment>
- 
+
                 <div class="container flex flex-row pl-3 pr-3">
                     <div class="logo">
                         <a href="/home"><h2>Sport <br />Equipment</h2></a>
                     </div>
-                    <button type="button" class="btn btn-light log-in"onClick={() => { this.onOpenModalLogin() }}>Login</button>
-                    <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Sign Up</button>
+                    {status.IsLogin ? <p className="log-in">Hello, {status.Name}</p>
+                        : <React.Fragment>
+                            <button type="button" class="btn btn-light log-in" onClick={() => { this.onOpenModalLogin() }}>Login</button>
+                            <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Sign Up</button>
+                        </React.Fragment>
+                    }
                     <a class="d-flex" href="/home/Cart">
-                        <img class="d-block" src="./../../../../Content/images/cart.svg" alt="Cart" width="30" style={{margin: "auto 5px"}} />
-                    </a>           
+                        <img class="d-block" src="./../../../../Content/images/cart.svg" alt="Cart" width="30" style={{ margin: "auto 5px" }} />
+                    </a>
                 </div>
                 <div class="navigation">
                     <div class="container">
@@ -86,10 +156,10 @@ class Header extends React.Component {
                             <ul class="col flex justify-content-between">
                                 {this.state.data.map((item) => (
                                     <li class="dropdown">
-                                        <a href={"/home/ProductByCategory?sportId="+item.Id}><strong>{item.Name}</strong></a>
+                                        <a href={"/home/ProductByCategory?sportId=" + item.Id}><strong>{item.Name}</strong></a>
                                         <ul class="dropdown-content">
                                             {item.Categories.map((cate) => (
-                                                <li><a href={"/home/ProductByCategory?cateId="+cate.Id}>{cate.Name}</a></li>
+                                                <li><a href={"/home/ProductByCategory?cateId=" + cate.Id}>{cate.Name}</a></li>
                                             ))}
                                         </ul>
                                     </li>
@@ -104,24 +174,24 @@ class Header extends React.Component {
                 <Modal center open={sign} onClose={() => { this.onCloseModal() }} >
                     <div className="modal-body">
                         <h2>Sign up<span> Free!</span></h2>
-                        <form className="form-signin" novalidate="novalidate">
-                        <div className="form-group">
-                            <label for="signupEmail">Email</label>
-                            <input class="form-control" type="email" id="signupEmail" placeholder="E-mail"  aria-required="true"/>
-                        </div>
-                        <div className="form-group">
-                            <label for="signupPass">Password</label>
-                            <input class="form-control" type="password" id="signupPass" placeholder="Password" required="" aria-required="true"/>
-                        </div>
-                        <div className="form-group">
-                            <label for="signupName">User name</label>
-                            <input class="form-control" type="password" id="signupName" placeholder="User name" required="" aria-required="true"/>
-                        </div>
-                        <div className="form-group">
-                            <label for="signupPhonenumber">Phone number</label>
-                            <input class="form-control" type="password" id="signupPhonenumber" placeholder="09012333333" required="" aria-required="true"/>
-                        </div>
-                        <input className="btn btn-primary w-full" type="button" value="Sign Up" onClick={() => this.handleSignup()} />
+                        <form className="form-signin" onSubmit={(e) => this.handleSignup(e)}>
+                            <div className="form-group">
+                                <label for="signupEmail">Email</label>
+                                <input class="form-control" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" id="signupEmail" placeholder="E-mail" aria-required="true" />
+                            </div>
+                            <div className="form-group">
+                                <label for="signupPass">Password</label>
+                                <input class="form-control" type="password" id="signupPass" placeholder="Password" required="" aria-required="true" />
+                            </div>
+                            <div className="form-group">
+                                <label for="signupName">User name</label>
+                                <input class="form-control" type="text" id="signupName" placeholder="User name" required="" aria-required="true" />
+                            </div>
+                            <div className="form-group">
+                                <label for="signupPhonenumber">Phone number</label>
+                                <input class="form-control" type="text" id="signupPhonenumber" placeholder="09012333333" required="" aria-required="true" />
+                            </div>
+                            <input className="btn btn-primary w-full" type="submit" value="Sign Up" />
                         </form>
                     </div>
                 </Modal>
@@ -129,24 +199,24 @@ class Header extends React.Component {
                 {/* <!-- signUp End -->
                   <!-- login --> */}
 
-                <Modal open={login} onClose={()=> this.onCloseModalclose()}>
+                <Modal open={login} onClose={() => this.onCloseModalclose()}>
 
                     <div className="modal-body">
-                        <h2 class="text-center" style={{margin: "0"}}>Login</h2>
+                        <h2 class="text-center" style={{ margin: "0" }}>Login</h2>
                         <form className="form-signin" novalidate="novalidate">
                             <div className="form-group">
                                 <label for="loginEmail">Email</label>
-                                <input class="form-control" type="email" id="loginEmail" placeholder="E-mail"  aria-required="true"/>
+                                <input class="form-control" type="email" id="loginEmail" placeholder="E-mail" aria-required="true" />
                             </div>
                             <div className="form-group">
                                 <label for="loginPass">Password</label>
-                                <input class="form-control" type="password" id="loginPass" placeholder="Password" required="" aria-required="true"/>
+                                <input class="form-control" type="password" id="loginPass" placeholder="Password" required="" aria-required="true" />
                             </div>
                             <input className="btn btn-primary w-full" type="button" value="Login" onClick={() => this.handleLogin()} />
                         </form>
                     </div>
                 </Modal>
-        </React.Fragment>
+            </React.Fragment>
         )
     }
 }

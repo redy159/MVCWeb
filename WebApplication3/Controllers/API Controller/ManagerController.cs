@@ -14,6 +14,10 @@ namespace WebApplication3.Controllers.API_Controller
     public class ManagerController : ApiController
     {
         ShoppingWebEntities _db;
+        static LoginStatus stat = new LoginStatus()
+        {
+            IsLogin = false,
+        };
         public ManagerController()
         {
             _db = new ShoppingWebEntities();
@@ -121,7 +125,7 @@ namespace WebApplication3.Controllers.API_Controller
         {
             Ack ack = new Ack();
             ack.IsSuccess = true;
-            if (!string.IsNullOrEmpty(data.Name) && !string.IsNullOrWhiteSpace(data.Name))
+            if (string.IsNullOrEmpty(data.Name) || string.IsNullOrWhiteSpace(data.Name))
             {
                 ack.IsSuccess = false;
                 ack.Message.Add("Name can't be empty");
@@ -161,10 +165,10 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpGet]
-        public async Task<Ack> DeleteCategory(int CategoryId)
+        public async Task<Ack> DeleteCategory(int id)
         {
             Ack ack = new Ack() { IsSuccess = true };
-            var category = await _db.Categories.FindAsync(CategoryId);
+            var category = await _db.Categories.FindAsync(id);
             if (category == null)
             {
                 ack.IsSuccess = false;
@@ -403,7 +407,7 @@ namespace WebApplication3.Controllers.API_Controller
             Receipt data = new Receipt()
             {
                 Id = 0,
-                UserId = 1,
+                UserId = cart.UserId,
                 Payment = 0,
                 CreatedDate = DateTime.Now,
                 Receipt_Product = tmp,
@@ -437,6 +441,35 @@ namespace WebApplication3.Controllers.API_Controller
                 ack.Message.Add("Name missing");
             }
             return ack;
+        }
+
+        [HttpPost]
+        public async Task<Ack<LoginStatus>> Login(User data)
+        {
+            Ack<LoginStatus> ack = new Ack<LoginStatus>() { IsSuccess = true };
+            var query = await (from u in _db.Users
+                               where u.Email == data.Email && u.Password == data.Password
+                               select u).FirstOrDefaultAsync();
+            if (query == null)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Email and password are not correct");
+            }
+            else
+            {
+                stat.IsLogin = true;
+                stat.Name = query.Name;
+                stat.UserType = query.UserType;
+                stat.UserId = query.Id;
+                ack.Data = stat;
+            }
+            return ack;
+        }
+
+        [HttpGet]
+        public LoginStatus CheckLogin()
+        {
+            return stat;
         }
 
         [HttpPost]
@@ -563,20 +596,20 @@ namespace WebApplication3.Controllers.API_Controller
             return res;
         }
 
-        private Ack ProductValidation(ProductModel data)
+        private Ack<Product> ProductValidation(ProductModel data)
         {
-            Ack ack = new Ack();
+            Ack<Product> ack = new Ack<Product>();
             ack.IsSuccess = true;
-            //if (data.BrandId == 0)
-            //{
-            //    ack.IsSuccess = false;
-            //    ack.Message.Add("Brand missing");
-            //}
-            //if (data.CategoryId == 0)
-            //{
-            //    ack.IsSuccess = false;
-            //    ack.Message.Add("Category missing");
-            //}
+            if (data.BrandId == 0)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Brand missing");
+            }
+            if (data.CategoryId == 0)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Category missing");
+            }
             if (String.IsNullOrEmpty(data.Name) || String.IsNullOrWhiteSpace(data.Name))
             {
                 ack.IsSuccess = false;
@@ -591,9 +624,9 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public async Task<Ack> AddProduct(ProductModel data)
+        public async Task<Ack<Product>> AddProduct(ProductModel data)
         {
-            Ack ack = ProductValidation(data);
+            Ack<Product> ack = ProductValidation(data);
 
             if (ack.IsSuccess)
             {
@@ -613,12 +646,12 @@ namespace WebApplication3.Controllers.API_Controller
                 }
                 Product tmp = data.Cast();
                 tmp.ImageId = img.Id;
-                tmp.BrandId = 1;
-                tmp.CategoryId = 1;
                 _db.Products.Add(tmp);
                 try
                 {
                     await _db.SaveChangesAsync();
+
+                    ack.Data = tmp;
                 }
                 catch (Exception e)
                 {
@@ -630,9 +663,9 @@ namespace WebApplication3.Controllers.API_Controller
         }
 
         [HttpPost]
-        public async Task<Ack> EditProduct(ProductModel data)
+        public async Task<Ack<Product>> EditProduct(ProductModel data)
         {
-            Ack ack = ProductValidation(data);
+            Ack<Product> ack = ProductValidation(data);
 
             if (ack.IsSuccess)
             {
@@ -640,10 +673,29 @@ namespace WebApplication3.Controllers.API_Controller
                                      where p.Id == data.Id
                                      select p).FirstOrDefaultAsync();
                 old.Name = data.Name;
-                old.ImageId = data.ImageId;
+                if (data.ImageId > 1)
+                    old.ImageId = data.ImageId;
+                else
+                {
+                    ImageFile img = new ImageFile()
+                    {
+                        ImageUrl = data.ImageUrl
+                    };
+
+                    _db.ImageFiles.Add(img);
+                    try
+                    {
+                        await _db.SaveChangesAsync();
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                    old.ImageId = img.Id;
+                }
                 old.Price = data.Price;
                 old.CategoryId = data.CategoryId;
-                old.BrandId = data.CategoryId;
+                old.BrandId = data.BrandId;
 
                 try
                 {
