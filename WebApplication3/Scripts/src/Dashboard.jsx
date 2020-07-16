@@ -13,7 +13,9 @@ class Dashboard extends React.Component {
                 ImageUrl:"",
                 BrandId:1,
                 CategoryId:1,
-            }
+            },
+            cateOption:[],
+            selectedCatelogy: 1,
         }
     }
 
@@ -91,7 +93,11 @@ class Dashboard extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                this.setState({cateList:data})
+                data.forEach(element => {
+                    this.state.cateOption.push({ value: element.Id, label: element.Name })
+                });
+                this.cateList = data
+                this.setState({})
             });
     }
 
@@ -132,6 +138,10 @@ class Dashboard extends React.Component {
         this.setState({ product: tmp })
     }
 
+    selectCatelogy(e) {
+        console.log(e.target.value)
+    }
+
     render() {
         let receipt = [];
         for (let i = 0; i < 10; i++) {
@@ -141,15 +151,14 @@ class Dashboard extends React.Component {
                 repStatus: "Done",
             })
         }
-        let {productList, userList, brandList, sportList, cateList, product} = this.state
-        console.log(cateList)
+        let {productList, userList, brandList, sportList, cateList, cateOption, product} = this.state
+        console.log(cateOption)
         return (
             <React.Fragment>
                 <div class="container mt-3">
                     <div class="row w-full d-flex">
                         <div class="col-3">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                
                                 <a class="nav-link nav-pills active show"
                                     id="v-pills-product-tab"
                                     data-toggle="pill" href="#v-pills-product"
@@ -248,7 +257,9 @@ class Dashboard extends React.Component {
                                         <label for="productPrice">Product price</label>
                                         <input value={product.Price} onChange={(e)=>{this.priceChange(e)}} type="number" class="form-control" id="productPrice" placeholder="Price" />
                                     </div>
-
+                                    <div class="form-group w-full">
+                                        <Dropdown options={cateOption} onChange={(e)=>{this.selectCatelogy(e)}} value={this.state.selectedCatelogy} placeholder="Select product's catelogy" />
+                                    </div> 
                                     <div class="form-group w-full">
                                         <ImageUploading
                                             onChange={(e) => this.imageChange(e)}
