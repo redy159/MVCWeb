@@ -14,6 +14,20 @@ class Cart extends React.Component {
         }
     }
 
+    createReceipt(){
+        var tmp = {Item: this.state.cartItem, Total: this.state.cartInfo.total}
+        fetch('/api/Manager/CreateReceipt', {
+            method: "Post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(tmp)
+        })
+            .then(response => response.json())
+            .then(data => this.setState({ data: data }));
+    }
+
     render() {
         const { login, sign } = this.state;
         console.log(this.state.cartItem)
@@ -34,7 +48,7 @@ class Cart extends React.Component {
                             <p>Amount Of Money</p>
                             <p>{item.Product.Price.toLocaleString()} đ</p>
                         </div>
-                        <button class="btn btn-danger m-auto">Delete</button>
+                        <button onClick={()=>this.createReceipt()} class="btn btn-danger m-auto">Delete</button>
                     </div>
                 )):null}
                 <h1 class="text-right" style={{padding: "0 35px", marginTop: "0"}}>Total: {this.state.cartInfo.total.toLocaleString()} đ</h1>

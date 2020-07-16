@@ -164,10 +164,12 @@
       <DependentUpon>ShopWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ack.cs" />
+    <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\Helper\CastHelper.cs" />
     <Compile Include="Models\PagingList.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductSearchModel.cs" />
+    <Compile Include="Models\ReceiptProductModel.cs" />
     <Compile Include="Models\ShopItem.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>ShopWeb.tt</DependentUpon>

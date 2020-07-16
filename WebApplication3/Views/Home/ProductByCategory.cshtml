@@ -4,6 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="root"></div>
+<div id="root" data-param="@Json.Encode(ViewBag.param)"></div>
 @Scripts.Render("~/Scripts/dist/productByCategory.js")
 

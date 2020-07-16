@@ -399,8 +399,8 @@ namespace WebApplication3.Controllers.API_Controller
                     Category = new Category()
                     {
                         Id = 1,
-                        Name ="Basketball ball",
-                        Sport = new Sport() { Id = 1, Name = "Basketball"},
+                        Name = "Basketball ball",
+                        Sport = new Sport() { Id = 1, Name = "Basketball" },
                         SportId = 1,
                     },
                     ImageFile = new ImageFile()
@@ -419,7 +419,7 @@ namespace WebApplication3.Controllers.API_Controller
             List<User> data = new List<User>();
             //data = await (from u in _db.Users
             //              select u).ToListAsync();
-            for (int i = 1; i<9;i++)
+            for (int i = 1; i < 9; i++)
             {
                 data.Add(new User()
                 {
@@ -442,6 +442,93 @@ namespace WebApplication3.Controllers.API_Controller
                           .Include(x => x.Receipt_Product.Select(y => y.Product))
                           select r).ToListAsync();
             return data;
+        }
+
+        [HttpPost]
+        public async Task<Ack> CreateReceipt(CartModel cart)
+        {
+            Ack ack = new Ack();
+            ack.IsSuccess = true;
+
+            List<Receipt_Product> tmp = new List<Receipt_Product>();
+            for (int i = 0; i < cart.Item.Count; i++)
+            {
+                tmp.Add(new Receipt_Product()
+                {
+                    ReceiptId = 0,
+                    ProductId = cart.Item[i].Product.Id,
+                    ProductCount = cart.Item[i].Quantity,
+                    TotalPrice = cart.Item[i].Quantity * cart.Item[i].Product.Price,
+                });
+            }
+
+
+            Receipt data = new Receipt()
+            {
+                Id = 0,
+                UserId = 1,
+                Payment = 0,
+                CreatedDate = DateTime.Now,
+                Receipt_Product = tmp,
+                Total = cart.Total,
+            };
+
+            _db.Receipts.Add(data);
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add(e.Message);
+            }
+            return ack;
+        }
+
+        private Ack UserValidation(User user)
+        {
+            Ack ack = new Ack() { IsSuccess = true };
+            if (string.IsNullOrEmpty(user.Password) || string.IsNullOrWhiteSpace(user.Name))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Password missing");
+            }
+            if (string.IsNullOrEmpty(user.Name) || string.IsNullOrWhiteSpace(user.Name))
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Name missing");
+            }
+            return ack;
+        }
+
+        [HttpPost]
+        public async Task<Ack> AddUser(User user)
+        {
+            Ack ack = UserValidation(user);
+            if (ack.IsSuccess)
+            {
+                User tmp = new User()
+                {
+                    Name = user.Name,
+                    Password = user.Password,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    UserType = 1,
+                };
+
+                _db.Users.Add(tmp);
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    ack.IsSuccess = false;
+                    ack.Message.Add(e.Message);
+                }
+            }
+            return ack;
         }
 
         [HttpGet]
@@ -600,36 +687,6 @@ namespace WebApplication3.Controllers.API_Controller
                     ack.Error.Add(e.Message);
                 }
             }
-            return ack;
-        }
-
-        private Ack UserValidate(User data)
-        {
-            Ack ack = new Ack();
-            ack.IsSuccess = true;
-            if (!String.IsNullOrEmpty(data.Name) && !String.IsNullOrWhiteSpace(data.Name))
-            {
-                ack.IsSuccess = false;
-                ack.Message.Add("Name can't be null or empty");
-            }
-            if (!String.IsNullOrEmpty(data.Email) && !String.IsNullOrWhiteSpace(data.Name))
-            {
-                ack.IsSuccess = false;
-                ack.Message.Add("Password can't be null or empty");
-            }
-            if (data.UserType == 0)
-            {
-                ack.IsSuccess = false;
-                ack.Message.Add("UserType not selected");
-            }
-
-            return ack;
-        }
-
-        [HttpPost]
-        public async Task<Ack> AddUser(User data)
-        {
-            Ack ack = UserValidate(data);
             return ack;
         }
 

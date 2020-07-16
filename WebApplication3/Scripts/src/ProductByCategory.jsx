@@ -6,10 +6,7 @@ class ProductByCategory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchModel: {
-                CateId: 1,
-                BrandId: 1,
-            }
+            searchModel: this.props.param
         }
     }
 
@@ -29,7 +26,7 @@ class ProductByCategory extends React.Component {
     render() {
         if (!this.state.data) return null;
         let { data } = this.state;
-        console.log(this.state.data)
+        console.log(this.state)
         return (
             <div class="container">
                 <nav aria-label="breadcrumb" style={{ backgroundColor: "#fff!important"}}>
@@ -47,5 +44,5 @@ class ProductByCategory extends React.Component {
             )
     }
 }
-
-ReactDOM.render(<ProductByCategory />, document.getElementById("root"));
+const param = JSON.parse(document.getElementById("root").getAttribute('data-param'));
+ReactDOM.render(<ProductByCategory param={param} />, document.getElementById("root"));

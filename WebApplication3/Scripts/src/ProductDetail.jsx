@@ -41,7 +41,7 @@ class ProductDetail extends React.Component {
     render() {
         if (!this.state.data) return null;
         let { data } = this.state;
-        console.log(data)
+        console.log(this.props)
         return (
             <div class="container">
                 <nav aria-label="breadcrumb" style={{ backgroundColor: "#fff!important"}}>
