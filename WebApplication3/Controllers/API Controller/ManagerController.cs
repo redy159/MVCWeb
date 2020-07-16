@@ -58,7 +58,7 @@ namespace WebApplication3.Controllers.API_Controller
             return ack;
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<Ack> DeleteSport(int sportId)
         {
             Ack ack = new Ack();
@@ -160,7 +160,7 @@ namespace WebApplication3.Controllers.API_Controller
             return ack;
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<Ack> DeleteCategory(int CategoryId)
         {
             Ack ack = new Ack() { IsSuccess = true };
@@ -721,12 +721,18 @@ namespace WebApplication3.Controllers.API_Controller
             return ack;
         }
 
-        [HttpPost]
-        public async Task DeleteProduct(int id)
+        [HttpGet]
+        public async Task<Ack> DeleteProduct(int id)
         {
+            Ack ack = new Ack();
             Product tmp = await (from p in _db.Products.Include(s => s.Brand).Include(s => s.Category)
                                  where p.Id == id
                                  select p).FirstOrDefaultAsync();
+            if (tmp == null)
+            {
+                ack.IsSuccess = false;
+                ack.Message.Add("Cant find product");
+            }
             try
             {
                 _db.Products.Remove(tmp);
@@ -734,7 +740,10 @@ namespace WebApplication3.Controllers.API_Controller
             }
             catch (Exception e)
             {
+                ack.IsSuccess = false;
+                ack.Message.Add(e.Message);
             }
+            return ack;
         }
 
         [HttpGet]
