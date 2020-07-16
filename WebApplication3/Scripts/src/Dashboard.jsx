@@ -147,15 +147,8 @@ class Dashboard extends React.Component {
                     <div class="row w-full d-flex">
                         <div class="col-3">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                
                                 <a class="nav-link nav-pills active show"
-                                    id="v-pills-receipt-tab"
-                                    data-toggle="pill"
-                                    href="#v-pills-receipt" role="tab"
-                                    aria-controls="v-pills-receipt"
-                                    aria-selected="true">
-                                    Receipt
-                                </a>
-                                <a class="nav-link"
                                     id="v-pills-product-tab"
                                     data-toggle="pill" href="#v-pills-product"
                                     role="tab" aria-controls="v-pills-product"
