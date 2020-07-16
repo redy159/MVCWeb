@@ -139,8 +139,8 @@ class Dashboard extends React.Component {
                 repStatus: "Done",
             })
         }
-        let {product} = this.state
-        console.log(this.state, "test")
+        let {productList, userList, brandList, sportList, cateList, product} = this.state
+        console.log(cateList)
         return (
             <React.Fragment>
                 <div class="container mt-3">
@@ -220,21 +220,26 @@ class Dashboard extends React.Component {
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Total</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Brand</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Edit/ Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {receipt.map((rep, i) => (
+                                            {productList? productList.map((prod, i) => (
                                                 <tr>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{rep.repCus}</td>
-                                                    <td>{rep.repTotal}</td>
-                                                    <td>{rep.repStatus}</td>
+                                                    <th scope="row">{prod.Name? prod.Name: "N/A"}</th>
+                                                    <td>{prod.Brand.Name? prod.Brand.Name: "N/A"}</td>
+                                                    <td>{prod.Price}</td>
+                                                    <td>{prod.Category.Name? prod.Category.Name: "N/A"}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </td>
                                                 </tr>
-                                            ))}
+                                            )): null}
                                         </tbody>
                                     </table>
                                     <br /><br />
@@ -279,21 +284,26 @@ class Dashboard extends React.Component {
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Total</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Phone number</th>
+                                                <th scope="col">Admin</th>
+                                                <th scope="col">Edit/ Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {receipt.map((rep, i) => (
+                                            {userList? userList.map((cus, i) => (
                                                 <tr>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{rep.repCus}</td>
-                                                    <td>{rep.repTotal}</td>
-                                                    <td>{rep.repStatus}</td>
+                                                    <th scope="row">{cus.Email}</th>
+                                                    <td>{cus.Name}</td>
+                                                    <td>{cus.PhoneNumber}</td>
+                                                    <td>{cus.UserType? "Yes" : "No"}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </td>
                                                 </tr>
-                                            ))}
+                                            )): null}
                                         </tbody>
                                     </table>
                                 </div>
@@ -302,20 +312,23 @@ class Dashboard extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Total</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Sport</th>
+                                                <th scope="col">Edit/ Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {receipt.map((rep, i) => (
+                                            {cateList? cateList.map((cate, i) => (
                                                 <tr>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{rep.repCus}</td>
-                                                    <td>{rep.repTotal}</td>
-                                                    <td>{rep.repStatus}</td>
+                                                    <th scope="row">{cate.Email}</th>
+                                                    <td>{cate.Name}</td>
+                                                    <td>{cate.Sport? cate.Sport.Name: "N/A"}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </td>
                                                 </tr>
-                                            ))}
+                                            )): null}
                                         </tbody>
                                     </table>
                                 </div>
@@ -324,20 +337,25 @@ class Dashboard extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Total</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Edit/ Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {receipt.map((rep, i) => (
+                                            {sportList? sportList.map((spo, i) => (
                                                 <tr>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{rep.repCus}</td>
-                                                    <td>{rep.repTotal}</td>
-                                                    <td>{rep.repStatus}</td>
+                                                    <th scope="row">{spo.Id}</th>
+                                                    <td>{spo.Name}</td>
+                                                    <td>{spo.Categories? spo.Categories.map((cate)=>(
+                                                        <p>{cate.Name}</p>
+                                                    )): null}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </td>
                                                 </tr>
-                                            ))}
+                                            )):null}
                                         </tbody>
                                     </table>
                                 </div>
@@ -346,20 +364,21 @@ class Dashboard extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Customer</th>
-                                                <th scope="col">Total</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Brand name</th>
+                                                <th scope="col">Edit/ Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {receipt.map((rep, i) => (
+                                            {brandList? brandList.map((brand, i) => (
                                                 <tr>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{rep.repCus}</td>
-                                                    <td>{rep.repTotal}</td>
-                                                    <td>{rep.repStatus}</td>
+                                                    <th scope="row">{brand.Id}</th>
+                                                    <td>{brand.Name}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </td>
                                                 </tr>
-                                            ))}
+                                            )):null}
                                         </tbody>
                                     </table>
                                 </div>
