@@ -238,6 +238,7 @@
       <DependentUpon>ShopWeb.edmx</DependentUpon>
       <LastGenOutput>ShopWeb.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="ShopWeb.edmx.sql" />
     <Content Include="ShopWeb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ShopWeb.edmx</DependentUpon>
