@@ -53,7 +53,9 @@ class Header extends React.Component {
 
     handleSubmit() {
         console.log("Submitting");
-        console.log(this.state);
+        console.log("username : " + document.getElementById("loginEmail").value);
+        console.log("pass : " + document.getElementById("loginPass").value);
+        //console.log(this.state);
     };
 
     render() {
@@ -67,9 +69,7 @@ class Header extends React.Component {
                     <div class="logo">
                         <a href="/home"><h2>Sport <br />Equipment</h2></a>
                     </div>
-                    <button type="button" class="btn btn-light log-in"
-                        onClick={() => { this.onOpenModalLogin() }}
-                        >
+                    <button type="button" class="btn btn-light log-in"onClick={() => { this.onOpenModalLogin() }}>
                         Đăng nhập
                     </button>
                     <button type="button" class="btn btn-light sign-up" onClick={() => { this.onOpenModal() }}>Đăng ký</button>
@@ -98,7 +98,7 @@ class Header extends React.Component {
 
                 {/* Sign up model */}
 
-                <Modal open={sign} onClose={() => { this.onCloseModal() }} center>
+                <Modal center open={sign} onClose={() => { this.onCloseModal() }} >
                     <div className="modal-body">
                         <h2>Sign up<span> Free!</span></h2>
                         <form className="form-signin" novalidate="novalidate">
@@ -122,16 +122,17 @@ class Header extends React.Component {
                 <Modal open={login} onClose={()=> this.onCloseModalclose()}>
 
                     <div className="modal-body">
-                        <h2>Login and Get <span>Started</span></h2>
-                        <span className="subtitle">Just fill in the form below</span>
+                        <h2 class="text-center" style={{margin: "0"}}>Login</h2>
                         <form className="form-signin" novalidate="novalidate">
                             <div className="form-group">
-                                <input className="form-control" type="email" name="email" placeholder="E-mail" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }}  />
+                                <label for="loginEmail">Email</label>
+                                <input class="form-control" type="email" id="loginEmail" placeholder="E-mail"  aria-required="true"/>
                             </div>
                             <div className="form-group">
-                                <input type="password" name="pass" className="form-control" placeholder="Password" required="" autocomplete="off" aria-required="true" onChange={(e) => { this.handleChange(e) }}  />
+                                <label for="loginPass">Password</label>
+                                <input class="form-control" type="password" id="loginPass" placeholder="Password" required="" aria-required="true"/>
                             </div>
-                            <input className="btn btn-light log-in" type="button" value="Login" onClick={() => this.handleSubmit()} />
+                            <input className="btn btn-primary w-full" type="button" value="Login" onClick={() => this.handleSubmit()} />
                         </form>
                     </div>
                 </Modal>

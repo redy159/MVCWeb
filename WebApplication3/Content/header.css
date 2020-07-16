@@ -169,3 +169,6 @@ a:hover {
     padding:15px;
     margin:auto;
 }
+.react-responsive-modal-modal {
+    margin: auto!important;
+}
