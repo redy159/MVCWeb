@@ -1,6 +1,8 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import ImageUploading from "react-images-uploading";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 class Dashboard extends React.Component {
     constructor(props) {
