@@ -52,12 +52,12 @@ class Header extends React.Component {
     };  
 
     handleLogin() {
-        console.log("Submitting");
+        console.log("Submitting login");
         console.log("email : " + document.getElementById("loginEmail").value);
         console.log("pass : " + document.getElementById("loginPass").value);
     };
     handleSignup() {
-        console.log("Submitting");
+        console.log("Submitting sign up");
         console.log("email : " + document.getElementById("signupEmail").value);
         console.log("pass : " + document.getElementById("signupPass").value);
         console.log("username : " + document.getElementById("signupName").value);

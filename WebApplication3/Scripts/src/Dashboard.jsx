@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import ImageUploading from "react-images-uploading";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import { Modal } from "react-responsive-modal";
+import 'react-responsive-modal/styles.css';
+import EditForm from "./Component/EditForm.jsx"
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -16,6 +19,8 @@ class Dashboard extends React.Component {
             },
             cateOption:[],
             selectedCatelogy: 1,
+            modalCate: false,
+            modalSport: false,
         }
     }
 
@@ -96,8 +101,7 @@ class Dashboard extends React.Component {
                 data.forEach(element => {
                     this.state.cateOption.push({ value: element.Id, label: element.Name })
                 });
-                this.cateList = data
-                this.setState({})
+                this.setState({cateList: data})
             });
     }
 
@@ -142,6 +146,22 @@ class Dashboard extends React.Component {
         console.log(e.target.value)
     }
 
+    onOpenModalUpdateCate() {
+        this.setState({ modalCate: true });
+    };
+    onOpenModalUpdateSport() {
+        this.setState({ modalSport: true });
+    };
+    handleEditCate() {
+        console.log("Edit cate");
+        console.log("name : " + document.getElementById("cateEditName").value);
+    }
+    onCloseModalCate (){
+        this.setState({ modalCate: false });
+    };
+    onCloseModalSport (){
+        this.setState({ modalSport: false });
+    };
     render() {
         let receipt = [];
         for (let i = 0; i < 10; i++) {
@@ -152,7 +172,7 @@ class Dashboard extends React.Component {
             })
         }
         let {productList, userList, brandList, sportList, cateList, cateOption, product} = this.state
-        console.log(cateOption)
+        console.log(cateList)
         return (
             <React.Fragment>
                 <div class="container mt-3">
@@ -246,7 +266,9 @@ class Dashboard extends React.Component {
                                             )): null}
                                         </tbody>
                                     </table>
-                                    <br /><br />
+                                    <br />
+                                    
+                                    <br />
                                     <div class="add-new">
                                     <h2 class="text-center w-full">Add new product</h2>
                                     <div class="form-group">
@@ -326,17 +348,22 @@ class Dashboard extends React.Component {
                                         <tbody>
                                             {cateList? cateList.map((cate, i) => (
                                                 <tr>
-                                                    <th scope="row">{cate.Email}</th>
+                                                    <th scope="row">{cate.Id}</th>
                                                     <td>{cate.Name}</td>
                                                     <td>{cate.Sport? cate.Sport.Name: "N/A"}</td>
                                                     <td>
-                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-primary" onClick={() => { this.onOpenModalUpdateCate() }}>Edit</button>
                                                         <button class="btn btn-danger">Delete</button>
                                                     </td>
                                                 </tr>
                                             )): null}
                                         </tbody>
                                     </table>
+                                    <br/>
+                                    <Modal center open={this.state.modalCate} onClose={() => { this.onCloseModalCate() }} >
+                                        <EditForm name="Catelogy" properties={["Name"]} />
+                                    </Modal>
+                                    <br/>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-sport" role="tabpanel" aria-labelledby="v-pills-sport-tab">
                                     <table class="table">
@@ -357,13 +384,18 @@ class Dashboard extends React.Component {
                                                         <p>{cate.Name}</p>
                                                     )): null}</td>
                                                     <td>
-                                                        <button class="btn btn-primary">Edit</button>
+                                                        <button class="btn btn-primary" onClick={() => { this.onOpenModalUpdateSport() }}>Edit</button>
                                                         <button class="btn btn-danger">Delete</button>
                                                     </td>
                                                 </tr>
                                             )):null}
                                         </tbody>
                                     </table>
+                                    <br/>
+                                    <Modal center open={this.state.modalSport} onClose={() => { this.onCloseModalSport() }} >
+                                        <EditForm name="Sport" properties={["Name"]} />
+                                    </Modal>
+                                    <br/>
                                 </div>
                                 <div class="tab-pane fade" id="v-pills-brand" role="tabpanel" aria-labelledby="v-pills-sport-brand">
                                     <table class="table">
